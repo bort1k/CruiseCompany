@@ -4,6 +4,7 @@ import com.bortni.dao.*;
 import com.bortni.dao.connection.ConnectionHolder;
 import com.bortni.exceptions.ReadException;
 import com.bortni.model.*;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,18 +12,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MySqlDaoFactory implements DaoFactory {
+
+    private final Logger LOGGER = Logger.getLogger(MySqlDaoFactory.class);
+
     private Map<Class, DaoCreator> classCreators;
 
     @Override
-    public Connection getConnection() throws SQLException {
-        return ConnectionHolder.getDataSource().getConnection();
+    public Connection getConnection(){
+        try {
+            return ConnectionHolder.getDataSource().getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     @Override
-    public GenericDao getDao(Class objectClass) throws SQLException, ReadException {
-        DaoCreator daoCreator = classCreators.get(objectClass);
-
-        return daoCreator.create(getConnection());
+    public GenericDao getDao(Class objectClass) {
+        GenericDao genericDao = null;
+        try {
+            DaoCreator daoCreator = classCreators.get(objectClass);
+            genericDao = daoCreator.create(getConnection());
+        }
+        catch (ReadException e){
+            e.printStackTrace();
+        }
+        return genericDao;
     }
 
     public MySqlDaoFactory() {

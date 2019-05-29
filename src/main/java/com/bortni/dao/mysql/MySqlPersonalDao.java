@@ -4,7 +4,9 @@ import com.bortni.dao.DaoFactory;
 import com.bortni.dao.GenericDao;
 import com.bortni.dao.JdbcAbstractDao;
 import com.bortni.dao.sql_queries.PersonalQuery;
+import com.bortni.exceptions.ReadException;
 import com.bortni.model.Personal;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MySqlPersonalDao extends JdbcAbstractDao<Personal> {
+
+    private final Logger LOGGER = Logger.getLogger(MySqlPersonalDao.class);
 
     public MySqlPersonalDao(Connection connection) {
         super(connection);
@@ -30,6 +34,12 @@ public class MySqlPersonalDao extends JdbcAbstractDao<Personal> {
         return PersonalQuery.SELECT_ONE.getQuery();
     }
 
+
+    @Override
+    public String getCreateQuery() {
+        return PersonalQuery.INSERT.getQuery();
+    }
+
     @Override
     public String getUpdateQuery() {
         return PersonalQuery.UPDATE.getQuery();
@@ -41,6 +51,20 @@ public class MySqlPersonalDao extends JdbcAbstractDao<Personal> {
     }
 
     @Override
+    public void setStatementForInsert(PreparedStatement preparedStatement, Personal object) {
+        try{
+            preparedStatement.setString(1, object.getCaptainFirstName());
+            preparedStatement.setString(2, object.getCaptainLastName());
+            preparedStatement.setInt(3, object.getNumberOfTechnicalWorkers());
+            preparedStatement.setInt(4, object.getNumberOfHotelWorkers());
+            preparedStatement.setInt(5, object.getNumberOfShopWorkers());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void setStatementForUpdate(PreparedStatement preparedStatement, Personal object) {
 
     }
@@ -48,6 +72,18 @@ public class MySqlPersonalDao extends JdbcAbstractDao<Personal> {
     @Override
     public void setStatementForDelete(PreparedStatement preparedStatement, Personal object) {
 
+    }
+
+    @Override
+    public void create(Personal object) throws ReadException {
+        String sql = PersonalQuery.INSERT.getQuery();
+        try (PreparedStatement preparedStatement = this.getConnection().prepareStatement(sql)) {
+            LOGGER.debug("Execute query: " + sql);
+            setStatementForInsert(preparedStatement, object);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -70,10 +106,4 @@ public class MySqlPersonalDao extends JdbcAbstractDao<Personal> {
         }
         return personals;
     }
-
-    @Override
-    public Personal create() {
-        return null;
-    }
-
 }

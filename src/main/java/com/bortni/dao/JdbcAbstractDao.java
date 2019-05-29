@@ -1,6 +1,7 @@
 package com.bortni.dao;
 
 import com.bortni.exceptions.ReadException;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,8 +10,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public abstract class JdbcAbstractDao<T> implements GenericDao<T>{
-
     private Connection connection;
+
+    private final Logger LOGGER = Logger.getLogger(JdbcAbstractDao.class);
 
     protected JdbcAbstractDao(Connection connection) {
         this.connection = connection;
@@ -20,15 +22,20 @@ public abstract class JdbcAbstractDao<T> implements GenericDao<T>{
 
     public abstract String getUpdateQuery();
 
+    public abstract String getCreateQuery();
+
     public abstract String getDeleteQuery();
 
     public abstract String getSelectOneQuery();
+
+    public abstract void setStatementForInsert(PreparedStatement preparedStatement, T object);
 
     public abstract void setStatementForUpdate(PreparedStatement preparedStatement, T object);
 
     public abstract void setStatementForDelete(PreparedStatement preparedStatement, T object);
 
-    public abstract List<T> getObjects(ResultSet resultSet) throws SQLException;
+    public abstract List<T> getObjects(ResultSet resultSet) throws SQLException, ReadException;
+
 
     @Override
     public T getByPK(int key) throws ReadException {
@@ -101,6 +108,10 @@ public abstract class JdbcAbstractDao<T> implements GenericDao<T>{
         }
 
         return objects;
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 
     @Override

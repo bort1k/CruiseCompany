@@ -1,6 +1,8 @@
 package com.bortni.dao.mysql;
 
 import com.bortni.dao.JdbcAbstractDao;
+import com.bortni.exceptions.ReadException;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +10,9 @@ import java.sql.ResultSet;
 import java.util.List;
 
 public class MySqlUserDao extends JdbcAbstractDao {
+
+    private final Logger LOGGER = Logger.getLogger(MySqlUserDao.class);
+
     protected MySqlUserDao(Connection connection) {
         super(connection);
     }
@@ -23,6 +28,11 @@ public class MySqlUserDao extends JdbcAbstractDao {
     }
 
     @Override
+    public String getCreateQuery() {
+        return null;
+    }
+
+    @Override
     public String getDeleteQuery() {
         return null;
     }
@@ -30,6 +40,11 @@ public class MySqlUserDao extends JdbcAbstractDao {
     @Override
     public String getSelectOneQuery() {
         return null;
+    }
+
+    @Override
+    public void setStatementForInsert(PreparedStatement preparedStatement, Object object) {
+
     }
 
     @Override
@@ -48,7 +63,7 @@ public class MySqlUserDao extends JdbcAbstractDao {
     }
 
     @Override
-    public Object create() {
-        return null;
+    public void create(Object object) throws ReadException {
+
     }
 }

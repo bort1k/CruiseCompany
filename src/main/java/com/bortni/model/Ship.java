@@ -4,12 +4,12 @@ import java.util.List;
 
 public class Ship {
     private int id;
-    private int name;
+    private String name;
     private int passenger_capacity;
     private Personal personal;
     private List<Cruise> cruises;
 
-    public Ship(int id, int name, int passenger_capacity, Personal personal, List<Cruise> cruises) {
+    public Ship(int id, String name, int passenger_capacity, Personal personal, List<Cruise> cruises) {
         this.id = id;
         this.name = name;
         this.passenger_capacity = passenger_capacity;
@@ -29,11 +29,11 @@ public class Ship {
         this.id = id;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -59,5 +59,16 @@ public class Ship {
 
     public void setCruises(List<Cruise> cruises) {
         this.cruises = cruises;
+    }
+
+    @Override
+    public String toString() {
+        return "Ship{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", passenger_capacity=" + passenger_capacity +
+                ", personal=" + personal +
+                ", cruises=" + cruises +
+                '}';
     }
 }

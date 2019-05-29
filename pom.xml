@@ -20,6 +20,7 @@
     <commons-dbcp2.version>2.4.0</commons-dbcp2.version>
     <mysql.version>8.0.15</mysql.version>
     <log4j.version>1.2.17</log4j.version>
+    <servlet.api.version>4.0.1</servlet.api.version>
   </properties>
 
   <dependencies>
@@ -46,6 +47,31 @@
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
       <version>1.2.17</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>${servlet.api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>1.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.0</version>
+      <scope>provided</scope>
     </dependency>
 
   </dependencies>
@@ -103,6 +129,13 @@
         <port>8080</port>
         <path>/cruise_company</path>
       </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+          </dependency>
+        </dependencies>
       </plugin>
 
     </plugins>

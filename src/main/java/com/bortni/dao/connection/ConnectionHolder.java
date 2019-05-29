@@ -3,7 +3,6 @@ package com.bortni.dao.connection;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.log4j.Logger;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +43,10 @@ public class ConnectionHolder {
                         ds.setUsername(user);
                         ds.setPassword(password);
 
+                        ds.setMinIdle(5);
+                        ds.setMaxIdle(10);
+                        ds.setMaxOpenPreparedStatements(100);
+                        ds.setMaxTotal(100);
                         dataSource = ds;
                     } catch (IOException e) {
                         System.out.println("Error! Properties file doesn't exist");
