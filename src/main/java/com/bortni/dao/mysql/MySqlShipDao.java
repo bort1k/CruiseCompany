@@ -1,8 +1,10 @@
 package com.bortni.dao.mysql;
 
+import com.bortni.dao.GenericDao;
 import com.bortni.dao.JdbcAbstractDao;
 import com.bortni.dao.sql_queries.ShipQuery;
 import com.bortni.exceptions.ReadException;
+import com.bortni.model.Cruise;
 import com.bortni.model.Ship;
 import com.bortni.service.PersonalService;
 import org.apache.log4j.Logger;
@@ -71,10 +73,12 @@ public class MySqlShipDao extends JdbcAbstractDao<Ship> {
             while (resultSet.next()){
                 Ship ship = new Ship();
                 PersonalService personalService = new PersonalService();
+                List cruises = new MySqlCruiseDao(this.getConnection()).getAll();
                 ship.setId(resultSet.getInt("id"));
                 ship.setName(resultSet.getString("ship_name"));
                 ship.setPassenger_capacity(resultSet.getInt("passenger_capacity"));
                 ship.setPersonal(personalService.getPersonalById(resultSet.getInt("personal_id")));
+                ship.setCruises(cruises);
                 LOGGER.info("Ship was created " + resultSet.getInt("personal_id"));
                 ships.add(ship);
             }

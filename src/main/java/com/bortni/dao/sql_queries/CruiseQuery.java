@@ -1,9 +1,7 @@
 package com.bortni.dao.sql_queries;
 
-import com.bortni.model.Cruise;
-
 public enum CruiseQuery {
-    SELECT_ALL("SELECT * FROM сruise"),
+    SELECT_ALL("SELECT * FROM cruise"),
 
     SELECT_ONE("SELECT * FROM cruise WHERE id = ?;"),
 

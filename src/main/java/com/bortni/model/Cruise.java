@@ -7,18 +7,20 @@ public class Cruise {
     private int id;
     private String name;
     private int duration;
+    private int numberOfPorts;
     private int price;
     private Date startDate;
-    private Ship ship;
+    private int ship_id;
     private List<Port> ports;
 
-    public Cruise(int id, String name, int duration, int price, Date start_date, Ship ship, List<Port> ports) {
+    public Cruise(int id, String name, int duration, int numberOfPorts, int price, Date start_date, int ship_id, List<Port> ports) {
         this.id = id;
         this.name = name;
         this.duration = duration;
+        this.numberOfPorts = numberOfPorts;
         this.price = price;
         this.startDate = start_date;
-        this.ship = ship;
+        this.ship_id = ship_id;
         this.ports = ports;
     }
 
@@ -66,12 +68,12 @@ public class Cruise {
         this.startDate = startDate;
     }
 
-    public Ship getShip() {
-        return ship;
+    public int getShipId() {
+        return ship_id;
     }
 
-    public void setShip(Ship ship) {
-        this.ship = ship;
+    public void setShipId(int ship_id) {
+        this.ship_id = ship_id;
     }
 
     public List<Port> getPorts() {
@@ -82,4 +84,11 @@ public class Cruise {
         this.ports = ports;
     }
 
+    public int getNumberOfPorts() {
+        return numberOfPorts;
+    }
+
+    public void setNumberOfPorts(int numberOfPorts) {
+        this.numberOfPorts = numberOfPorts;
+    }
 }

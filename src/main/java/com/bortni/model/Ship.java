@@ -7,9 +7,9 @@ public class Ship {
     private String name;
     private int passenger_capacity;
     private Personal personal;
-    private List<Cruise> cruises;
+    private List cruises;
 
-    public Ship(int id, String name, int passenger_capacity, Personal personal, List<Cruise> cruises) {
+    public Ship(int id, String name, int passenger_capacity, Personal personal, List cruises) {
         this.id = id;
         this.name = name;
         this.passenger_capacity = passenger_capacity;
@@ -53,11 +53,11 @@ public class Ship {
         this.personal = personal;
     }
 
-    public List<Cruise> getCruises() {
+    public List getCruises() {
         return cruises;
     }
 
-    public void setCruises(List<Cruise> cruises) {
+    public void setCruises(List cruises) {
         this.cruises = cruises;
     }
 

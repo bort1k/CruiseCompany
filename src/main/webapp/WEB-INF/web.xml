@@ -12,8 +12,8 @@
     <welcome-file>/jsp/index.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-    <servlet-name>DispatcherServlet</servlet-name>
-    <servlet-class>com.bortni.web.DispatcherServlet</servlet-class>
+    <servlet-name>Servlet</servlet-name>
+    <servlet-class>com.bortni.web.Servlet</servlet-class>
   </servlet>
 
   <jsp-config>
@@ -25,7 +25,7 @@
   </jsp-config>
 
   <servlet-mapping>
-    <servlet-name>DispatcherServlet</servlet-name>
+    <servlet-name>Servlet</servlet-name>
     <url-pattern>/app/*</url-pattern>
   </servlet-mapping>
 
