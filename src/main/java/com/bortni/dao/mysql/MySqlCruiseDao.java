@@ -4,6 +4,7 @@ import com.bortni.dao.JdbcAbstractDao;
 import com.bortni.dao.sql_queries.CruiseQuery;
 import com.bortni.exceptions.ReadException;
 import com.bortni.model.Cruise;
+import com.bortni.model.Ship;
 import com.bortni.service.ShipService;
 import org.apache.log4j.Logger;
 
@@ -67,16 +68,8 @@ public class MySqlCruiseDao extends JdbcAbstractDao {
         List<Cruise> cruises = new ArrayList<>();
         try{
             while (resultSet.next()){
-                Cruise cruise = new Cruise();
-                ShipService shipService = new ShipService();
-                cruise.setId(resultSet.getInt("id"));
-                cruise.setDuration(resultSet.getInt("duration"));
-                cruise.setNumberOfPorts(resultSet.getInt("number_of_ports"));
-                cruise.setPrice(resultSet.getInt("price"));
-                cruise.setName(resultSet.getString("cruise_name"));
-                cruise.setStartDate(resultSet.getDate("start_date"));
-                cruise.setShipId(resultSet.getInt("ship_id"));
-
+                Cruise cruise = getCruise(resultSet);
+                LOGGER.info("Cruise was created" + resultSet.getInt("id"));
                 cruises.add(cruise);
             }
         }
@@ -87,8 +80,61 @@ public class MySqlCruiseDao extends JdbcAbstractDao {
         return cruises;
     }
 
+    public List getCruisesByShipId(int id) throws ReadException {
+        List cruises;
+
+        String sql = CruiseQuery.SELECT_BY_SHIP_ID.getQuery();
+
+        try (PreparedStatement preparedStatement = this.getConnection().prepareStatement(sql)){
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            LOGGER.info("Getting all objects");
+            cruises = getObjects(resultSet);
+        }
+        catch (SQLException e){
+            throw new ReadException(e);
+        }
+        return cruises;
+    }
+
+    public List getCruisesWithShips() throws ReadException {
+        List<Cruise> cruises = new ArrayList<>();
+
+        String sql = CruiseQuery.SELECT_ALL_WITH_SHIPS.getQuery();
+
+        try(PreparedStatement preparedStatement = this.getConnection().prepareStatement(sql)){
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                Cruise cruise = getCruise(resultSet);
+                Ship ship = new Ship();
+                ship.setName(resultSet.getString("ship_name"));
+                ship.setId(resultSet.getInt("ship_id"));
+                cruise.setShip(ship);
+                LOGGER.info("Cruise was created" + resultSet.getInt("id"));
+                cruises.add(cruise);
+            }
+
+        } catch (SQLException e) {
+            throw new ReadException(e);
+        }
+
+        return cruises;
+    }
+
     @Override
     public void create(Object object) throws ReadException {
+    }
 
+
+    public Cruise getCruise(ResultSet resultSet) throws SQLException {
+        Cruise cruise = new Cruise();
+        cruise.setId(resultSet.getInt("id"));
+        cruise.setDuration(resultSet.getInt("duration"));
+        cruise.setNumberOfPorts(resultSet.getInt("number_of_ports"));
+        cruise.setPrice(resultSet.getInt("price"));
+        cruise.setName(resultSet.getString("cruise_name"));
+        cruise.setStartDate(resultSet.getDate("start_date"));
+        return cruise;
     }
 }

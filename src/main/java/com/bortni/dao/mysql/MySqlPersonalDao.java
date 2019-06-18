@@ -98,6 +98,7 @@ public class MySqlPersonalDao extends JdbcAbstractDao<Personal> {
                 personal.setNumberOfTechnicalWorkers(resultSet.getInt("technical_workers"));
                 personal.setNumberOfHotelWorkers(resultSet.getInt("hotel_workers"));
                 personal.setNumberOfShopWorkers(resultSet.getInt("shop_workers"));
+                LOGGER.info("Personal was created");
                 personals.add(personal);
             }
         }
@@ -106,4 +107,22 @@ public class MySqlPersonalDao extends JdbcAbstractDao<Personal> {
         }
         return personals;
     }
+
+    public Personal getPersonalByShipId(int id) throws ReadException {
+        List<Personal> personals;
+
+        String sql = PersonalQuery.SELECT_ONE_BY_SHIP_ID.getQuery();
+
+        try(PreparedStatement preparedStatement = this.getConnection().prepareStatement(sql)){
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            personals = this.getObjects(resultSet);
+
+        } catch (SQLException e) {
+            throw new ReadException(e);
+        }
+
+        return personals.iterator().next();
+    }
+
 }

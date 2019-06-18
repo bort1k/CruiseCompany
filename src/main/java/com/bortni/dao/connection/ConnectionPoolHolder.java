@@ -1,60 +1,56 @@
 package com.bortni.dao.connection;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import javax.sql.DataSource;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-
-public class ConnectionHolder {
-    private static volatile BasicDataSource dataSource;
-    private static final Logger LOGGER = Logger.getLogger(ConnectionHolder.class);
-
-    public static BasicDataSource getDataSource() {
+public class ConnectionPoolHolder {
+    private static volatile DataSource dataSource;
+    private static final Logger logger = LogManager.getLogger(ConnectionPoolHolder.class);
+    public static DataSource getDataSource() {
         if (dataSource == null) {
-            synchronized (ConnectionHolder.class) {
+            synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
-                    LOGGER.debug("DataSource: " + dataSource);
-                    BasicDataSource ds = new BasicDataSource();
                     Properties properties = new Properties();
-                    String fileName = "database.properties";
+                    String propFileName = "database.properties";
+
                     try (InputStream inputStream = Thread.currentThread()
                             .getContextClassLoader()
-                            .getResourceAsStream(fileName)) {
-                        LOGGER.debug("InputStream: " + inputStream);
-                        if(inputStream != null){
-                            LOGGER.info("inputStream is not null");
+                            .getResourceAsStream(propFileName)) {
+
+                        if (inputStream != null) {
                             properties.load(inputStream);
+                        } else {
+                            logger.fatal(new FileNotFoundException("property file '" + propFileName + "' not found in the classpath"));
                         }
-                        else{
-                            LOGGER.debug("file *.properties: " + fileName + "does not exist!");
-                            throw new FileNotFoundException();
-                        }
-                        String driver = properties.getProperty("db.connection.driver");
-                        String url = properties.getProperty("db.connection.url");
-                        String user = properties.getProperty("db.connection.username");
-                        String password = properties.getProperty("db.connection.password");
+                        Class.forName(properties.getProperty("db.connection.driver"));
+                        dataSource = getBasicDataSource(properties);
 
-                        ds.setDriverClassName(driver);
-                        ds.setUrl(url);
-                        ds.setUsername(user);
-                        ds.setPassword(password);
-
-                        ds.setMinIdle(5);
-                        ds.setMaxIdle(10);
-                        ds.setMaxOpenPreparedStatements(100);
-                        ds.setMaxTotal(11);
-                        dataSource = ds;
-                    } catch (IOException e) {
-                        System.out.println("Error! Properties file doesn't exist");
+                    } catch (IOException | ClassNotFoundException e) {
+                        logger.fatal(e);
                     }
                 }
             }
         }
+
         return dataSource;
     }
-}
 
+    private static BasicDataSource getBasicDataSource(Properties properties) {
+        BasicDataSource ds = new BasicDataSource();
+        ds.setUrl(properties.getProperty("db.connection.url"));
+        ds.setUsername(properties.getProperty("db.connection.username"));
+        ds.setPassword(properties.getProperty("db.connection.password"));
+        ds.setMinIdle(5);
+        ds.setMaxIdle(10);
+        ds.setMaxOpenPreparedStatements(100);
+        return ds;
+    }
+
+}

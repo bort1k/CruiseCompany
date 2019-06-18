@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface GenericDao<T> {
+public interface GenericDao<T> extends AutoCloseable{
     T getByPK(int key) throws ReadException;
 
     void update(T object) throws ReadException;

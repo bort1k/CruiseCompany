@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class JdbcAbstractDao<T> implements GenericDao<T>{
@@ -101,12 +102,12 @@ public abstract class JdbcAbstractDao<T> implements GenericDao<T>{
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             ResultSet resultSet = preparedStatement.executeQuery();
+            LOGGER.info("Getting all objects");
             objects = getObjects(resultSet);
         }
         catch (SQLException e){
             throw new ReadException(e);
         }
-
         return objects;
     }
 

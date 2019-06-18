@@ -3,6 +3,10 @@ package com.bortni.dao.sql_queries;
 public enum CruiseQuery {
     SELECT_ALL("SELECT * FROM cruise"),
 
+    SELECT_ALL_WITH_SHIPS("SELECT * FROM cruise, ship WHERE ship_id = ship.id;"),
+
+    SELECT_BY_SHIP_ID("SELECT * FROM cruise WHERE ship_id = ?;"),
+
     SELECT_ONE("SELECT * FROM cruise WHERE id = ?;"),
 
     INSERT("INSERT INTO cruise " +

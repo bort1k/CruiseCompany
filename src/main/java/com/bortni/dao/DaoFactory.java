@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public interface DaoFactory {
 
-    Connection getConnection() throws SQLException;
+    Connection getConnection() throws SQLException, ReadException;
 
     interface DaoCreator{
         GenericDao create(Connection connection) throws ReadException;

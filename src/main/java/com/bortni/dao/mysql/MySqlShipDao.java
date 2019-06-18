@@ -1,12 +1,9 @@
 package com.bortni.dao.mysql;
 
-import com.bortni.dao.GenericDao;
 import com.bortni.dao.JdbcAbstractDao;
 import com.bortni.dao.sql_queries.ShipQuery;
 import com.bortni.exceptions.ReadException;
-import com.bortni.model.Cruise;
 import com.bortni.model.Ship;
-import com.bortni.service.PersonalService;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -23,6 +20,7 @@ public class MySqlShipDao extends JdbcAbstractDao<Ship> {
     protected MySqlShipDao(Connection connection) {
         super(connection);
     }
+
 
     @Override
     public String getSelectAllQuery() {
@@ -72,14 +70,13 @@ public class MySqlShipDao extends JdbcAbstractDao<Ship> {
         try {
             while (resultSet.next()){
                 Ship ship = new Ship();
-                PersonalService personalService = new PersonalService();
-                List cruises = new MySqlCruiseDao(this.getConnection()).getAll();
                 ship.setId(resultSet.getInt("id"));
                 ship.setName(resultSet.getString("ship_name"));
-                ship.setPassenger_capacity(resultSet.getInt("passenger_capacity"));
-                ship.setPersonal(personalService.getPersonalById(resultSet.getInt("personal_id")));
-                ship.setCruises(cruises);
-                LOGGER.info("Ship was created " + resultSet.getInt("personal_id"));
+                ship.setReleaseYear(resultSet.getInt("release_year"));
+                ship.setPassengerCapacity(resultSet.getInt("passenger_capacity"));
+                ship.setImageUrl("/images/ships/" + resultSet.getString("image_url") + ".jpg");
+
+                LOGGER.info("Ship was created " + resultSet.getInt("id"));
                 ships.add(ship);
             }
         }catch (SQLException e){
@@ -88,6 +85,8 @@ public class MySqlShipDao extends JdbcAbstractDao<Ship> {
 
         return ships;
     }
+
+
 
     @Override
     public void create(Ship object) throws ReadException {

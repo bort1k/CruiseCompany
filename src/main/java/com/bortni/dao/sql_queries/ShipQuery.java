@@ -6,7 +6,7 @@ public enum ShipQuery {
     SELECT_ONE("SELECT * FROM ship WHERE id = ?;"),
 
     INSERT("INSERT INTO personal " +
-            "(passenger_capacity, ship_name, personal_id, )" +
+            "(passenger_capacity, ship_name, personal_id)" +
             "VALUES (?, ?, ?);"),
 
     UPDATE("UPDATE ship " +

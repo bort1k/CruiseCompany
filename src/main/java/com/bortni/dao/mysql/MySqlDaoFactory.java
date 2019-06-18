@@ -1,11 +1,12 @@
 package com.bortni.dao.mysql;
 
 import com.bortni.dao.*;
-import com.bortni.dao.connection.ConnectionHolder;
+import com.bortni.dao.connection.ConnectionPoolHolder;
 import com.bortni.exceptions.ReadException;
 import com.bortni.model.*;
 import org.apache.log4j.Logger;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -17,15 +18,16 @@ public class MySqlDaoFactory implements DaoFactory {
 
     private Map<Class, DaoCreator> classCreators;
 
-    @Override
-    public Connection getConnection(){
-        try {
-            return ConnectionHolder.getDataSource().getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    private DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
-        return null;
+    @Override
+    public Connection getConnection() throws ReadException {
+        try {
+            return dataSource.getConnection();
+        } catch (SQLException e) {
+            LOGGER.fatal(e);
+            throw new ReadException(e);
+        }
     }
 
     @Override

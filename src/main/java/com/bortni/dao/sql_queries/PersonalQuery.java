@@ -5,6 +5,8 @@ public enum PersonalQuery {
 
     SELECT_ONE("SELECT * FROM personal WHERE id = ?;"),
 
+    SELECT_ONE_BY_SHIP_ID("SELECT * FROM personal WHERE ship_id = ?;"),
+
     INSERT("INSERT INTO personal " +
             "(captain_firstname, captain_lastname, technical_workers, hotel_workers, shop_workers)" +
             "VALUES (?, ?, ? ,?, ?);"),
