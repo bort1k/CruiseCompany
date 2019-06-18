@@ -1,7 +1,7 @@
 package com.bortni.web.commands;
 
 import com.bortni.service.ShipService;
-import com.bortni.web.Routes;
+import com.bortni.util.Routes;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

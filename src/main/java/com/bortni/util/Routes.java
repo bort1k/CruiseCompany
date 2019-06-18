@@ -1,4 +1,4 @@
-package com.bortni.web;
+package com.bortni.util;
 
 public enum Routes {
     HOME("/jsp/home.jsp"),
@@ -10,6 +10,7 @@ public enum Routes {
     SIGN_UP("/jsp/sign-up.jsp"),
     SIGN_IN("/jsp/sign-in.jsp"),
     USER_PROFILE("/jsp/user-profile.jsp"),
+    ADMIN("/jsp/admin.jsp"),
     ;
 
     private final String path;

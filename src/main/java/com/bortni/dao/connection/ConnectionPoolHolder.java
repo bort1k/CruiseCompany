@@ -18,7 +18,7 @@ public class ConnectionPoolHolder {
             synchronized (ConnectionPoolHolder.class) {
                 if (dataSource == null) {
                     Properties properties = new Properties();
-                    String propFileName = "database.properties";
+                    String propFileName = "database/database.properties";
 
                     try (InputStream inputStream = Thread.currentThread()
                             .getContextClassLoader()

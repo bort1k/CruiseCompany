@@ -36,10 +36,10 @@
         <ul class="navbar-nav">
             <li class="nav-item">
                 <c:if test="${sessionScope.userSession == null}">
-                    <a href="${pageContext.request.contextPath}/eden-cruises/sign-up"
+                    <a href="${pageContext.request.contextPath}/eden-cruises/sign-up-page"
                        class="nav-link float-right"><fmt:message key="label.menu.sign.up"/></a>
                     <span class="float-right mt-2" style="color: rgba(255,255,255,.5)">/</span>
-                    <a href="${pageContext.request.contextPath}/eden-cruises/sign-in"
+                    <a href="${pageContext.request.contextPath}/eden-cruises/sign-in-page"
                        class="nav-link float-right"><fmt:message key="label.menu.sign.in"/></a>
                 </c:if>
                 <c:if test="${sessionScope.userSession != null}">

@@ -13,9 +13,9 @@
 <div class="">
     <div class="sign-up col-lg-4" style="color: white; margin:100px auto auto auto">
         <c:if test="${param.emailExist == false}">
-            <p style="color: white">Successful registration! Now sign in to your account.</p>
+            <p style="color: white">Sign in to your account.</p>
         </c:if>
-        <form action="${pageContext.request.contextPath}/eden-cruises/sign-in-user" method="post">
+        <form action="${pageContext.request.contextPath}/eden-cruises/sign-in" method="post">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>

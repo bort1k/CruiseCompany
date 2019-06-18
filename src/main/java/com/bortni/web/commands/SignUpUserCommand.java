@@ -2,11 +2,9 @@ package com.bortni.web.commands;
 
 import com.bortni.dao.mysql.MySqlCruiseDao;
 import com.bortni.exceptions.EmailAlreadyExistException;
-import com.bortni.exceptions.UserDoesNotExist;
 import com.bortni.model.User;
 import com.bortni.service.UserService;
-import com.bortni.web.Routes;
-import com.bortni.web.Servlet;
+import com.bortni.util.Routes;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;

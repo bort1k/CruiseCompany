@@ -1,17 +1,15 @@
 package com.bortni.web.commands;
 
-import com.bortni.util.UrlPath;
+import com.bortni.util.Routes;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class LogOutCommand implements Command{
+public class AdminCommand implements Command{
     @Override
     public void getPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getSession().removeAttribute("userSession");
-        request.getSession().invalidate();
-        response.sendRedirect("/eden-cruises" + UrlPath.HOME.getPath());
+        request.getRequestDispatcher(Routes.ADMIN.getRoute()).forward(request, response);
     }
 }

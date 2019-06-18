@@ -86,8 +86,6 @@ public class MySqlShipDao extends JdbcAbstractDao<Ship> {
         return ships;
     }
 
-
-
     @Override
     public void create(Ship object) throws ReadException {
 

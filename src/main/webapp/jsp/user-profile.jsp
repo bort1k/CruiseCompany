@@ -25,6 +25,9 @@
     <p>
         <fmt:message key="user.profile.name"/> : ${sessionScope.userSession.firstName} ${sessionScope.userSession.lastName}
     </p>
+    <p>
+        Role: ${sessionScope.userSession.role}
+    </p>
 </div>
 <jsp:include page="footer.jsp"/>
 </body>
