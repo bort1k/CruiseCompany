@@ -23,7 +23,7 @@ public class UserService {
             if (isEmailExist){
                 throw new EmailAlreadyExistException("Email is already exist");
             }
-            genericDao.create(user);
+            ((MySqlUserDao)genericDao).create(user);
         }
         catch (ReadException e){
             e.printStackTrace();

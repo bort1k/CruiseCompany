@@ -1,5 +1,7 @@
 package com.bortni.web.commands;
 
+import com.bortni.model.User;
+import com.bortni.util.ForwardUserUtil;
 import com.bortni.util.Routes;
 
 import javax.servlet.ServletException;
@@ -10,6 +12,6 @@ import java.io.IOException;
 public class SignInPageCommand implements Command {
     @Override
     public void getPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher(Routes.SIGN_IN.getRoute()).forward(request, response);
+        SignedUserRedirect.redirectSignedUser(Routes.SIGN_IN.getRoute(),request, response);
     }
 }

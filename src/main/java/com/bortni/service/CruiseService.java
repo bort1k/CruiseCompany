@@ -9,11 +9,10 @@ import com.bortni.model.Cruise;
 import java.util.List;
 
 public class CruiseService {
-    private MySqlDaoFactory daoFactory;
     private GenericDao genericDao;
 
     public CruiseService() {
-        daoFactory = new MySqlDaoFactory();
+        MySqlDaoFactory daoFactory = new MySqlDaoFactory();
         genericDao = daoFactory.getDao(Cruise.class);
     }
 

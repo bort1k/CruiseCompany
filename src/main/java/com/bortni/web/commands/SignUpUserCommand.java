@@ -4,6 +4,7 @@ import com.bortni.dao.mysql.MySqlCruiseDao;
 import com.bortni.exceptions.EmailAlreadyExistException;
 import com.bortni.model.User;
 import com.bortni.service.UserService;
+import com.bortni.util.ForwardUserUtil;
 import com.bortni.util.Routes;
 import org.apache.log4j.Logger;
 
@@ -27,18 +28,23 @@ public class SignUpUserCommand implements Command{
         String lastName = request.getParameter("last_name");
         String password = request.getParameter("password");
 
-        try {
-            userService.isEmailExist(email);
-            User user = new User();
-            user.setEmail(email);
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setPassword(password);
-            userService.createUser(user);
-            request.getRequestDispatcher(Routes.SIGN_IN.getRoute() + "?emailExist=false").forward(request,response);
+        User user = (User)request.getSession().getAttribute("userSession");
+        if(user != null){
+            ForwardUserUtil.forwardSignedInUser(user, request, response);
         }
-        catch (EmailAlreadyExistException e){
-            request.getRequestDispatcher(Routes.SIGN_UP.getRoute() + "?emailExist=true").forward(request, response);
+        else {
+            try {
+                userService.isEmailExist(email);
+                user = new User();
+                user.setEmail(email);
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setPassword(password);
+                userService.createUser(user);
+                request.getRequestDispatcher(Routes.SIGN_IN.getRoute() + "?emailExist=false").forward(request, response);
+            } catch (EmailAlreadyExistException e) {
+                request.getRequestDispatcher(Routes.SIGN_UP.getRoute() + "?emailExist=true").forward(request, response);
+            }
         }
 
     }
