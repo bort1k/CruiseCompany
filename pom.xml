@@ -73,6 +73,17 @@
       <version>2.0</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>7.0.0-beta3</version>
+      <scope>test</scope>
+    </dependency>
 
   </dependencies>
 
@@ -126,8 +137,9 @@
       <artifactId>tomcat7-maven-plugin</artifactId>
       <version>2.2</version>
       <configuration>
-        <port>8080</port>
-        <path>/cruise_company</path>
+        <port>8082</port>
+        <path>/</path>
+        <update>true</update>
       </configuration>
         <dependencies>
           <dependency>

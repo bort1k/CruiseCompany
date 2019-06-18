@@ -46,7 +46,7 @@ public class ConnectionHolder {
                         ds.setMinIdle(5);
                         ds.setMaxIdle(10);
                         ds.setMaxOpenPreparedStatements(100);
-                        ds.setMaxTotal(10);
+                        ds.setMaxTotal(11);
                         dataSource = ds;
                     } catch (IOException e) {
                         System.out.println("Error! Properties file doesn't exist");
