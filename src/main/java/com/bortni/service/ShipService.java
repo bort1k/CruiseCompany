@@ -6,6 +6,8 @@ import com.bortni.dao.mysql.MySqlDaoFactory;
 import com.bortni.exceptions.ReadException;
 import com.bortni.model.Ship;
 
+import java.util.List;
+
 public class ShipService {
 
     private GenericDao genericDao;
@@ -15,7 +17,22 @@ public class ShipService {
         genericDao = daoFactory.getDao(Ship.class);
     }
 
-    public Ship getById(int id) throws ReadException {
-        return (Ship) genericDao.getByPK(id);
+    public Ship getById(int id) {
+        try {
+            return (Ship) genericDao.getByPK(id);
+        } catch (ReadException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List getAllShips() {
+        List ships = null;
+        try {
+            ships = genericDao.getAll();
+        } catch (ReadException e) {
+            e.printStackTrace();
+        }
+        return ships;
     }
 }

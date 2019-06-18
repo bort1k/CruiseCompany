@@ -10,18 +10,32 @@ public class Cruise {
     private int numberOfPorts;
     private int price;
     private Date startDate;
-    private int ship_id;
-    private List<Port> ports;
+    private Ship ship;
+    private List ports;
 
-    public Cruise(int id, String name, int duration, int numberOfPorts, int price, Date start_date, int ship_id, List<Port> ports) {
+    @Override
+    public String toString() {
+        return "Cruise{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", duration=" + duration +
+                ", numberOfPorts=" + numberOfPorts +
+                ", price=" + price +
+                ", startDate=" + startDate +
+                ", ship=" + ship +
+                ", ports=" + ports +
+                '}';
+    }
+
+    public Cruise(int id, String name, int duration, int numberOfPorts, int price, Date start_date, Ship ship, List ports) {
         this.id = id;
         this.name = name;
         this.duration = duration;
         this.numberOfPorts = numberOfPorts;
         this.price = price;
         this.startDate = start_date;
-        this.ship_id = ship_id;
         this.ports = ports;
+        this.ship = ship;
     }
 
     public Cruise() {
@@ -68,19 +82,11 @@ public class Cruise {
         this.startDate = startDate;
     }
 
-    public int getShipId() {
-        return ship_id;
-    }
-
-    public void setShipId(int ship_id) {
-        this.ship_id = ship_id;
-    }
-
-    public List<Port> getPorts() {
+    public List getPorts() {
         return ports;
     }
 
-    public void setPorts(List<Port> ports) {
+    public void setPorts(List ports) {
         this.ports = ports;
     }
 
@@ -90,5 +96,13 @@ public class Cruise {
 
     public void setNumberOfPorts(int numberOfPorts) {
         this.numberOfPorts = numberOfPorts;
+    }
+
+    public Ship getShip() {
+        return ship;
+    }
+
+    public void setShip(Ship ship) {
+        this.ship = ship;
     }
 }

@@ -6,6 +6,9 @@ public class Tour {
     private int price;
     private Port port;
 
+    public Tour() {
+    }
+
     public Tour(int id, String name, int price, Port port) {
         this.id = id;
         this.name = name;
