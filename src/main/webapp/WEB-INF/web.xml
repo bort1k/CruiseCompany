@@ -6,11 +6,9 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
           version="3.1">
-  <display-name>Archetype Created Web Application</display-name>
+  <display-name>EDEN Cruises</display-name>
 
-  <welcome-file-list>
-    <welcome-file>/jsp/index.jsp</welcome-file>
-  </welcome-file-list>
+
   <servlet>
     <servlet-name>Servlet</servlet-name>
     <servlet-class>com.bortni.web.Servlet</servlet-class>
@@ -18,16 +16,39 @@
 
   <jsp-config>
     <jsp-property-group>
-      <url-pattern>*.html</url-pattern>
+      <url-pattern>*.jsp</url-pattern>
       <page-encoding>UTF-8</page-encoding>
     </jsp-property-group>
-
   </jsp-config>
 
   <servlet-mapping>
     <servlet-name>Servlet</servlet-name>
-    <url-pattern>/app/*</url-pattern>
+    <url-pattern>/eden-cruises/*</url-pattern>
   </servlet-mapping>
+  
+  <context-param>
+    <param-name>language</param-name>
+    <param-value>ua</param-value>
+  </context-param>
+
+
+  <filter>
+    <filter-name>LocalizationFilter</filter-name>
+    <filter-class>com.bortni.filter.LocalizationFilter</filter-class>
+    <init-param>
+      <param-name>bundle</param-name>
+      <param-value>messages</param-value>
+    </init-param>
+    <init-param>
+      <param-name>locale</param-name>
+      <param-value>en</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>LocalizationFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 
 
 </web-app>

@@ -1,0 +1,209 @@
+body li{
+    list-style-type: none;
+}
+
+.my_header{
+    height: 40px;
+    background-color: #15264C;
+}
+
+.language{
+    margin-left: 30px;
+}
+.telephone_number{
+    color: white;
+    margin-right: 30px;
+}
+
+.telephone_icon{
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+}
+
+.language_icon{
+    width: 26px;
+    height: 26px;
+}
+
+.main_button_and_image{
+    height: 694px;
+    background: url("../images/Image_2.png") no-repeat;
+    background-size: cover;
+    margin-bottom: 60px;
+}
+
+.main_menu{
+    background: rgba(0,0,0, 0.5);
+}
+
+.other_menu{
+    background: #2D4760;
+    margin-bottom: 60px;
+}
+
+.sign_in li{
+    width: 100%;
+}
+
+
+.sign_in a{
+    text-align: right;
+}
+
+.search_button{
+    padding-top: 450px;
+}
+
+.inside_search_button{
+    float: right;
+}
+
+.button a{
+    font-weight: bold;
+    color: #0E436F; /* цвет текста */
+    text-decoration: none; /* убирать подчёркивание у ссылок */
+    user-select: none; /* убирать выделение текста */
+    background-color: #F9C700; /* фон кнопки */
+    padding: .7em 1.5em; /* отступ от текста */
+    outline: none; /* убирать контур в Mozilla */
+}
+.button a:hover {
+    text-decoration: none;
+    background: rgb(255, 179, 0);
+} /* при наведении курсора мышки */
+.button a:active { text-decoration: none; background: yellow; } /* при нажатии */
+
+.container{
+    color: #15264C;
+}
+
+.phrase{
+    margin-bottom: 40px;
+}
+
+
+.card_center{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.card-img-top{
+    width: 100%;
+}
+
+.card p{
+    font-size: 18px;
+}
+
+nobr{
+    font-size: 18px;
+}
+
+p.number{
+    font-size: 30px;
+}
+
+.btn-warning{
+    color: #0E436F !important;
+}
+
+
+.my_footer{
+    background: #203559;
+    margin-top: 60px;
+}
+
+.my_footer h4{
+    color: white;
+    margin-bottom: 30px;
+}
+
+.copyright{
+    display: flex;
+    height: 40px;
+    color: white;
+    background: #15264C;
+}
+
+.copyright p{
+    margin: auto;
+    font-size: 16px;
+}
+
+.languagepicker img{
+    height: 26px;
+    width: 26px;
+}
+
+.languagepicker {
+
+    display: inline-block;
+    padding: 0;
+    height: 30px;
+    overflow: hidden;
+    transition: all .3s ease;
+    margin: auto;
+    vertical-align: top;
+    float: left;
+}
+
+.languagepicker:hover {
+    /* don't forget the 1px border */
+    height: 61px;
+}
+
+.languagepicker a{
+    color: #000;
+    text-decoration: none;
+}
+
+.languagepicker li {
+    display: block;
+    padding: 0 5px;
+    line-height: 30px;
+}
+
+.languagepicker li:hover{
+}
+
+.languagepicker a:first-child li {
+    border: none;
+}
+
+.languagepicker img{
+    margin: auto;
+}
+
+
+.roundborders {
+    border-radius: 5px;
+}
+
+.ship_card{
+    margin-bottom: 30px;
+}
+
+.card-img-top{
+    border-radius: 5px;
+}
+
+.ship_item_img{
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.ship_information{
+    border-radius: 5px;
+}
+
+.ship_item_container li{
+    list-style-type: circle;
+}
+
+.make_offer{
+    font-size: 18px;
+    font-weight: bold;
+}
+
