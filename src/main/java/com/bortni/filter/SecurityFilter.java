@@ -25,7 +25,7 @@ public class SecurityFilter implements Filter {
         User signedInUser = (User) request.getSession().getAttribute("userSession");
 
         if(UrlPath.SIGN_IN.getPath().equals(path) && signedInUser != null){
-            ForwardUserUtil.forwardSignedInUser(signedInUser, request, response);
+            ForwardUserUtil.forwardSignedInUser(signedInUser,UrlPath.USER_PROFILE.getPath(), request, response);
             return;
         }
 

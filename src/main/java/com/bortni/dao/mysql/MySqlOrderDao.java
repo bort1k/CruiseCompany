@@ -1,10 +1,14 @@
 package com.bortni.dao.mysql;
 
+import com.bortni.dao.DaoFactory;
+import com.bortni.dao.GenericDao;
 import com.bortni.dao.JdbcAbstractDao;
 import com.bortni.dao.sql_queries.OrderQuery;
 import com.bortni.exceptions.ReadException;
+import com.bortni.model.Cruise;
 import com.bortni.model.Order;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
+import com.bortni.model.User;
+import com.bortni.model.enums.Status;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -67,10 +71,28 @@ public class MySqlOrderDao extends JdbcAbstractDao<Order> {
             Order order = new Order();
             order.setId(resultSet.getInt("id"));
             order.setSumPrice(resultSet.getInt("sum_price"));
+            order.setStatus(Status.valueOf(resultSet.getString("status")));
+            order.setCruise(getCruiseFromResultSet(resultSet));
+            order.setUser(getUserFromResultSet(resultSet));
             orders.add(order);
         }
         return orders;
+    }
 
+    public int getIndexByUserId(int id) throws ReadException {
+        String sql = OrderQuery.SELECT_CRUISE_ID_BY_ID.getQuery();
+        final ResultSet resultSet;
+        int cruiseId = 0;
+        try(PreparedStatement preparedStatement = this.getConnection().prepareStatement(sql)){
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                cruiseId = resultSet.getInt("cruise_id");
+            }
+        } catch (SQLException e) {
+            throw new ReadException(e);
+        }
+        return cruiseId;
     }
 
     @Override
@@ -115,5 +137,19 @@ public class MySqlOrderDao extends JdbcAbstractDao<Order> {
         } catch (SQLException e) {
             throw new ReadException(e);
         }
+    }
+
+    private Cruise getCruiseFromResultSet(ResultSet resultSet) throws SQLException {
+        Cruise cruise = new Cruise();
+        cruise.setName(resultSet.getString("cruise_name"));
+        return cruise;
+    }
+
+    private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
+        User user = new User();
+        user.setFirstName(resultSet.getString("firstname"));
+        user.setLastName(resultSet.getString("lastname"));
+        user.setEmail(resultSet.getString("email"));
+        return user;
     }
 }

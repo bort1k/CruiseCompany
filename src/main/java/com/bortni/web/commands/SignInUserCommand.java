@@ -24,14 +24,14 @@ public class SignInUserCommand implements Command {
 
 
     @Override
-    public void getPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
         User user;
         if(request.getSession().getAttribute("userSession") != null){
             user = (User)request.getSession().getAttribute("userSession");
-            ForwardUserUtil.forwardSignedInUser(user, request, response);
+            ForwardUserUtil.forwardSignedInUser(user, UrlPath.USER_PROFILE.getPath(), request, response);
         }
         else {
             try {
@@ -44,6 +44,10 @@ public class SignInUserCommand implements Command {
 
         user = userService.getUserByEmailAndPassword(email, password);
         request.getSession().setAttribute("userSession", user);
-        ForwardUserUtil.forwardSignedInUser(user, request, response);
+        String pageUrl = (String) request.getSession().getAttribute("previousPageUrl");
+        if(pageUrl == null){
+            pageUrl = UrlPath.USER_PROFILE.getPath();
+        }
+        ForwardUserUtil.forwardSignedInUser(user, pageUrl, request, response);
     }
 }

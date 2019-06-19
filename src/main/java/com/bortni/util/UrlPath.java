@@ -13,7 +13,9 @@ public enum UrlPath {
     SIGN_IN("/sign-in"),
     LOG_OUT("/log-out"),
     USER_PROFILE("/user-profile"),
-    ADMIN("/admin")
+    ADMIN("/admin"),
+    ADD_TOUR_TO_ORDER("/cruise-item/add-tour"),
+    ADD_ORDER("/cruise-item/add-order"),
     ;
 
     private final String path;

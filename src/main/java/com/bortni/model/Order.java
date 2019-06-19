@@ -7,11 +7,13 @@ import java.util.List;
 public class Order {
     private int id;
     private Cruise cruise;
+
     private User user;
+
+    private List tours;
     private List<Bonus> bonuses;
     private Status status;
     private int sumPrice;
-
     public Order() {
     }
 
@@ -61,5 +63,26 @@ public class Order {
 
     public void setSumPrice(int sumPrice) {
         this.sumPrice = sumPrice;
+    }
+
+    public List getTours() {
+        return tours;
+    }
+
+    public void setTours(List tours) {
+        this.tours = tours;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", cruise=" + cruise +
+                ", user=" + user +
+                ", tours=" + tours +
+                ", bonuses=" + bonuses +
+                ", status=" + status +
+                ", sumPrice=" + sumPrice +
+                '}';
     }
 }

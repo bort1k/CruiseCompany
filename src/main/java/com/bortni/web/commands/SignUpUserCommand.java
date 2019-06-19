@@ -6,6 +6,7 @@ import com.bortni.model.User;
 import com.bortni.service.UserService;
 import com.bortni.util.ForwardUserUtil;
 import com.bortni.util.Routes;
+import com.bortni.util.UrlPath;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -22,7 +23,7 @@ public class SignUpUserCommand implements Command{
     }
 
     @Override
-    public void getPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String firstName = request.getParameter("first_name");
         String lastName = request.getParameter("last_name");
@@ -30,7 +31,7 @@ public class SignUpUserCommand implements Command{
 
         User user = (User)request.getSession().getAttribute("userSession");
         if(user != null){
-            ForwardUserUtil.forwardSignedInUser(user, request, response);
+            ForwardUserUtil.forwardSignedInUser(user, UrlPath.USER_PROFILE.getPath(), request, response);
         }
         else {
             try {

@@ -36,7 +36,7 @@
     </div>
 
     <div class="ports_list col-lg-6 border">
-        <h3><fmt:message key="cruise.item.ports" /></h3>
+        <h3><fmt:message key="cruise.item.ports"/></h3>
         <ul>
             <c:forEach items="${requestScope.cruise.ports}" var="port">
                 <li>
@@ -62,15 +62,30 @@
                 <td>${tour.port.name}</td>
                 <td>${tour.price}</td>
                 <td>
-                    <a href="#" class="btn btn-warning btn-block" style="font-size: 18px; font-weight: bold">
-                        <fmt:message key="cruise.item.tour.button.add"/>
-                    </a>
+                    <form action="${pageContext.request.contextPath}/eden-cruises/cruise-item/add-tour"
+                          method="post" name="addTour">
+                        <input type="hidden" name="tour.name" value="${tour.name}">
+                        <input type="hidden" name="tour.port.name" value="${tour.port.name}">
+                        <input type="hidden" name="tour.price" value="${tour.price}">
+                        <input type="submit" class="btn btn-warning btn-block"
+                               style="font-size: 18px; font-weight: bold" id="submit" name="submit"
+                               value="<fmt:message key="cruise.item.tour.button.add"/>">
+                    </form>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <h2>Total price: ${totalPrice}</h2>
+    <div class="confirmButton">
+        <form action="${pageContext.request.contextPath}/eden-cruises/cruise-item/add-order"
+              method="post" name="addOrder">
+            <input type="hidden" name="cruise.id" value="${cruise.id}">
+            <input type="hidden" name="price" value="${cruise.price}">
+            <input type="submit" class="btn btn-warning btn-block"
+                   style="font-size: 18px; font-weight: bold" name="submit"
+                   value="<fmt:message key="cruise.item.button.confirm"/>">
+        </form>
+    </div>
 </div>
 <jsp:include page="footer.jsp"/>
 </body>

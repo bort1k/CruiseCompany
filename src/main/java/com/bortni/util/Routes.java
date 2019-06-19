@@ -11,6 +11,7 @@ public enum Routes {
     SIGN_IN("/jsp/sign-in.jsp"),
     USER_PROFILE("/jsp/user-profile.jsp"),
     ADMIN("/jsp/admin.jsp"),
+    SUCCESSFUL("/jsp/successful.jsp"),
     ;
 
     private final String path;

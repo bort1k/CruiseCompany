@@ -7,13 +7,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ForwardUserUtil {
-    public static void forwardSignedInUser(User user, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public static void forwardSignedInUser(User user, String page, HttpServletRequest request, HttpServletResponse response) throws IOException {
         switch (user.getRole()){
             case ADMIN:
                 response.sendRedirect("/eden-cruises" + UrlPath.ADMIN.getPath());
                 break;
             case USER:
-                response.sendRedirect("/eden-cruises" + UrlPath.USER_PROFILE.getPath());
+                response.sendRedirect("/eden-cruises" + page);
                 break;
         }
     }

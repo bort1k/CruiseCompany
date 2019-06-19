@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class SignInPageCommand implements Command {
     @Override
-    public void getPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SignedUserRedirect.redirectSignedUser(Routes.SIGN_IN.getRoute(),request, response);
     }
 }

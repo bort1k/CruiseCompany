@@ -30,7 +30,7 @@ public class ShipItemCommand implements Command {
     }
 
     @Override
-    public void getPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String stringId = request.getParameter("id");
         int id = parseInt(stringId);

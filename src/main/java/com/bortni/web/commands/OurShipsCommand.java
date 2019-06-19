@@ -18,7 +18,7 @@ public class OurShipsCommand implements Command{
     }
 
     @Override
-    public void getPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List shipList = shipService.getAllShips();
 
         request.setAttribute("shipList", shipList);

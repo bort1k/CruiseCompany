@@ -26,6 +26,7 @@ public class Servlet extends HttpServlet {
         PortService portService = new PortService();
         TourService tourService = new TourService();
         UserService userService = new UserService();
+        OrderService orderService = new OrderService();
 
         commands.put("/", new HomeCommand());
         commands.put(UrlPath.HOME.getPath(), new HomeCommand());
@@ -39,8 +40,10 @@ public class Servlet extends HttpServlet {
         commands.put(UrlPath.SIGN_UP.getPath(), new SignUpUserCommand(userService));
         commands.put(UrlPath.SIGN_IN.getPath(), new SignInUserCommand(userService));
         commands.put(UrlPath.LOG_OUT.getPath(), new LogOutCommand());
-        commands.put(UrlPath.USER_PROFILE.getPath(), new UserProfileCommand());
-        commands.put(UrlPath.ADMIN.getPath(), new AdminCommand());
+        commands.put(UrlPath.USER_PROFILE.getPath(), new UserProfileCommand(orderService));
+        commands.put(UrlPath.ADMIN.getPath(), new AdminCommand(orderService));
+        commands.put(UrlPath.ADD_TOUR_TO_ORDER.getPath(), new AddTourToOrderCommand());
+        commands.put(UrlPath.ADD_ORDER.getPath(), new AddOrderCommand(orderService, cruiseService));
     }
 
     @Override
@@ -63,7 +66,7 @@ public class Servlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
         else {
-            command.getPage(request, response);
+            command.execute(request, response);
         }
     }
 }

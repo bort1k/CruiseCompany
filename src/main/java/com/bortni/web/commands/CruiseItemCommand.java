@@ -29,10 +29,17 @@ public class CruiseItemCommand implements Command {
     }
 
     @Override
-    public void getPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String stringId = request.getParameter("id");
-        int id = parseInt(stringId);
+        String sCruiseId = request.getParameter("cruise.id");
+        if(sCruiseId != null) {
+            request.getSession().setAttribute("cruiseIdSession", request.getParameter("cruise.id"));
+        }
+        else{
+            sCruiseId = (String) request.getSession().getAttribute("cruiseIdSession");
+        }
+        int id =  parseInt(sCruiseId);
+
         Cruise cruise = cruiseService.getCruiseById(id);
         List ports = portService.getPortsByCruiseId(id);
         List tours = tourService.getToursByCruiseId(id);
@@ -40,6 +47,7 @@ public class CruiseItemCommand implements Command {
 
         request.setAttribute("cruise", cruise);
         request.setAttribute("tours", tours);
+
         request.getRequestDispatcher(Routes.CRUISE_ITEM.getRoute()).forward(request, response);
     }
 }

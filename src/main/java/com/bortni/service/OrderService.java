@@ -1,5 +1,6 @@
 package com.bortni.service;
 
+import com.bortni.dao.DaoFactory;
 import com.bortni.dao.GenericDao;
 import com.bortni.dao.mysql.MySqlDaoFactory;
 import com.bortni.dao.mysql.MySqlOrderDao;
@@ -14,7 +15,7 @@ public class OrderService {
     private GenericDao genericDao;
 
     public OrderService() {
-        MySqlDaoFactory daoFactory = new MySqlDaoFactory();
+        DaoFactory daoFactory = new MySqlDaoFactory();
         genericDao = daoFactory.getDao(Order.class);
     }
 
@@ -33,6 +34,7 @@ public class OrderService {
         List orders;
         try {
             orders = ((MySqlOrderDao)genericDao).getOrdersByUserId(id);
+
             return orders;
         } catch (ReadException e) {
             e.printStackTrace();
@@ -40,15 +42,14 @@ public class OrderService {
         return null;
     }
 
-    public int sumAllPrice(Order order){
+    public Order sumAllPrice(Order order, List tours){
         int price = order.getCruise().getPrice();
-        List ports = order.getCruise().getPorts();
-        for(Object objectPort : ports){
-            for(Object objectTour: ((Port)objectPort).getTours()){
-                price += ((Tour)objectTour).getPrice();
-            }
+
+        for(Object tour : tours){
+            price += ((Tour)tour).getPrice();
         }
-        return price;
+        order.setSumPrice(price);
+        return order;
     }
 
     public void createOrder(Order order){
