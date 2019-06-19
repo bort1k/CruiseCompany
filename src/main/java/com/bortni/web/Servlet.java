@@ -1,6 +1,8 @@
 package com.bortni.web;
 
+import com.bortni.model.enums.Role;
 import com.bortni.service.*;
+import com.bortni.util.UrlPath;
 import com.bortni.web.commands.*;
 
 import javax.servlet.ServletException;
@@ -24,6 +26,7 @@ public class Servlet extends HttpServlet {
         PortService portService = new PortService();
         TourService tourService = new TourService();
         UserService userService = new UserService();
+        OrderService orderService = new OrderService();
 
         commands.put("/", new HomeCommand());
         commands.put(UrlPath.HOME.getPath(), new HomeCommand());
@@ -32,12 +35,15 @@ public class Servlet extends HttpServlet {
         commands.put(UrlPath.ABOUT_US.getPath(), new AboutUsCommand());
         commands.put(UrlPath.SHIP_ITEM.getPath(), new ShipItemCommand(shipService, personalService, cruiseService));
         commands.put(UrlPath.CRUISE_ITEM.getPath(), new CruiseItemCommand(cruiseService, portService, tourService));
-        commands.put(UrlPath.SIGN_UP.getPath(), new SignUpPageCommand());
-        commands.put(UrlPath.SIGN_IN.getPath(), new SignInPageCommand());
-        commands.put(UrlPath.SIGN_UP_USER.getPath(), new SignUpUserCommand(userService));
-        commands.put(UrlPath.SIGN_IN_USER.getPath(), new SignInUserCommand(userService));
+        commands.put(UrlPath.SIGN_UP_PAGE.getPath(), new SignUpPageCommand());
+        commands.put(UrlPath.SIGN_IN_PAGE.getPath(), new SignInPageCommand());
+        commands.put(UrlPath.SIGN_UP.getPath(), new SignUpUserCommand(userService));
+        commands.put(UrlPath.SIGN_IN.getPath(), new SignInUserCommand(userService));
         commands.put(UrlPath.LOG_OUT.getPath(), new LogOutCommand());
-        commands.put(UrlPath.USER_PROFILE.getPath(), new UserProfileCommand());
+        commands.put(UrlPath.USER_PROFILE.getPath(), new UserProfileCommand(orderService));
+        commands.put(UrlPath.ADMIN.getPath(), new AdminCommand(orderService));
+        commands.put(UrlPath.ADD_TOUR_TO_ORDER.getPath(), new AddTourToOrderCommand());
+        commands.put(UrlPath.ADD_ORDER.getPath(), new AddOrderCommand(orderService, cruiseService));
     }
 
     @Override
@@ -51,13 +57,16 @@ public class Servlet extends HttpServlet {
     }
 
     private void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getServletContext().setAttribute("role.admin", Role.ADMIN);
+        request.getServletContext().setAttribute("role.user", Role.USER);
+
         String uriPath = request.getPathInfo();
         Command command = commands.get(uriPath);
         if(command == null){
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
         else {
-            command.getPage(request, response);
+            command.execute(request, response);
         }
     }
 }

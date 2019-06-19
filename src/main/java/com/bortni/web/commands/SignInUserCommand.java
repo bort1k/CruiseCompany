@@ -4,8 +4,9 @@ import com.bortni.dao.mysql.MySqlCruiseDao;
 import com.bortni.exceptions.UserDoesNotExist;
 import com.bortni.model.User;
 import com.bortni.service.UserService;
-import com.bortni.web.Routes;
-import com.bortni.web.UrlPath;
+import com.bortni.util.ForwardUserUtil;
+import com.bortni.util.Routes;
+import com.bortni.util.UrlPath;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -23,14 +24,14 @@ public class SignInUserCommand implements Command {
 
 
     @Override
-    public void getPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
         User user;
         if(request.getSession().getAttribute("userSession") != null){
             user = (User)request.getSession().getAttribute("userSession");
-            forwardSignedInUser(user, request, response);
+            ForwardUserUtil.forwardSignedInUser(user, UrlPath.USER_PROFILE.getPath(), request, response);
         }
         else {
             try {
@@ -43,15 +44,10 @@ public class SignInUserCommand implements Command {
 
         user = userService.getUserByEmailAndPassword(email, password);
         request.getSession().setAttribute("userSession", user);
-        forwardSignedInUser(user, request, response);
-    }
-
-    private void forwardSignedInUser(User user, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        switch (user.getRole()){
-            case ADMIN:;
-            case USER:
-                response.sendRedirect("/eden-cruises" + UrlPath.HOME.getPath());
-                break;
+        String pageUrl = (String) request.getSession().getAttribute("previousPageUrl");
+        if(pageUrl == null){
+            pageUrl = UrlPath.USER_PROFILE.getPath();
         }
+        ForwardUserUtil.forwardSignedInUser(user, pageUrl, request, response);
     }
 }

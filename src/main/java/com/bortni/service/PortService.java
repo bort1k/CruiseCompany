@@ -10,11 +10,10 @@ import com.bortni.model.Port;
 import java.util.List;
 
 public class PortService {
-    private MySqlDaoFactory daoFactory;
     private GenericDao genericDao;
 
     public PortService() {
-        daoFactory = new MySqlDaoFactory();
+        MySqlDaoFactory daoFactory = new MySqlDaoFactory();
         genericDao = daoFactory.getDao(Port.class);
     }
 

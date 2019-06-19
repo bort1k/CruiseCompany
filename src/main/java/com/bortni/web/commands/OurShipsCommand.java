@@ -1,7 +1,7 @@
 package com.bortni.web.commands;
 
 import com.bortni.service.ShipService;
-import com.bortni.web.Routes;
+import com.bortni.util.Routes;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +18,7 @@ public class OurShipsCommand implements Command{
     }
 
     @Override
-    public void getPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List shipList = shipService.getAllShips();
 
         request.setAttribute("shipList", shipList);

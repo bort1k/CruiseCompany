@@ -35,7 +35,7 @@
                     <p class="number">$${cruise.price}</p>
                     <form action="${pageContext.request.contextPath}/eden-cruises/cruise-item"
                           method="get" id="form1">
-                        <input type="hidden" name="id" value="${cruise.id}">
+                        <input type="hidden" name="cruise.id" value="${cruise.id}">
                         <input type="hidden" name="ship_name" value="${cruise.ship.name}">
                         <input type="submit" class="btn btn-warning btn-block make_offer" style="text-align:center;"
                                value="<fmt:message key="home.container.button.make.offer"/>">

@@ -1,5 +1,6 @@
 package com.bortni.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -105,4 +106,5 @@ public class Cruise {
     public void setShip(Ship ship) {
         this.ship = ship;
     }
+
 }

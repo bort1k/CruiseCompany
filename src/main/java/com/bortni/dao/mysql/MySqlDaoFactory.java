@@ -50,8 +50,8 @@ public class MySqlDaoFactory implements DaoFactory {
         classCreators.put(Ship.class, MySqlShipDao::new);
         classCreators.put(Port.class, MySqlPortDao::new);
         classCreators.put(Tour.class, MySqlTourDao::new);
-        classCreators.put(Ticket.class, MySqlTicketDao::new);
         classCreators.put(User.class, MySqlUserDao::new);
+        classCreators.put(Order.class, MySqlOrderDao::new);
     }
 
 }

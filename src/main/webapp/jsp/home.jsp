@@ -19,7 +19,7 @@
     <div class="container search_button">
         <div class="inside_search_button col-3">
             <div class="button">
-                <a href=""><fmt:message key="home.button.find.cruises"/></a>
+                <a href="${pageContext.request.contextPath}/eden-cruises/our-cruises"><fmt:message key="home.button.find.cruises"/></a>
             </div>
         </div>
     </div>

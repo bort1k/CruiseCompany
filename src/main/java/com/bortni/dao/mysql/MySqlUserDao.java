@@ -73,7 +73,8 @@ public class MySqlUserDao extends JdbcAbstractDao {
                 user.setLastName(resultSet.getString("lastname"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
-                user.setRole(Role.USER);
+                Role role = Role.valueOf(resultSet.getString("role"));
+                user.setRole(role);
                 users.add(user);
             }
         } catch (SQLException e) {

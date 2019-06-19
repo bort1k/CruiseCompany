@@ -1,4 +1,4 @@
-package com.bortni.web;
+package com.bortni.util;
 
 public enum UrlPath {
     HOME("/home"),
@@ -7,12 +7,15 @@ public enum UrlPath {
     ABOUT_US("/about-us"),
     SHIP_ITEM("/ship-item"),
     CRUISE_ITEM("/cruise-item"),
+    SIGN_UP_PAGE("/sign-up-page"),
+    SIGN_IN_PAGE("/sign-in-page"),
     SIGN_UP("/sign-up"),
     SIGN_IN("/sign-in"),
-    SIGN_UP_USER("/sign-up-user"),
-    SIGN_IN_USER("/sign-in-user"),
     LOG_OUT("/log-out"),
     USER_PROFILE("/user-profile"),
+    ADMIN("/admin"),
+    ADD_TOUR_TO_ORDER("/cruise-item/add-tour"),
+    ADD_ORDER("/cruise-item/add-order"),
     ;
 
     private final String path;

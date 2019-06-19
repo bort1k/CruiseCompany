@@ -11,9 +11,9 @@ import java.sql.SQLException;
 
 public class PersonalService {
     private GenericDao genericDao;
-    private DaoFactory daoFactory;
+
     public PersonalService() {
-        daoFactory = new MySqlDaoFactory();
+        DaoFactory daoFactory = new MySqlDaoFactory();
         genericDao = daoFactory.getDao(Personal.class);
     }
 

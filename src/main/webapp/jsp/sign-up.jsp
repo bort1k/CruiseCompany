@@ -13,12 +13,12 @@
 <div class="">
     <div class="sign-up col-lg-4" style="color: white; margin:100px auto auto auto">
         <c:if test="${param.userExist == false}">
-            <p style="color: white">There is no such user! Please, sign up first.</p>
+            <p style="color: white"> Please, sign up first.</p>
         </c:if>
         <c:if test="${param.emailExist == true}">
             <p style="color: white">Email already exists! Enter another email.</p>
         </c:if>
-        <form action="${pageContext.request.contextPath}/eden-cruises/sign-up-user" method="post">
+        <form action="${pageContext.request.contextPath}/eden-cruises/sign-up" method="post">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>

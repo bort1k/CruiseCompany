@@ -5,7 +5,7 @@ import com.bortni.model.Ship;
 import com.bortni.service.CruiseService;
 import com.bortni.service.PersonalService;
 import com.bortni.service.ShipService;
-import com.bortni.web.Routes;
+import com.bortni.util.Routes;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -30,7 +30,7 @@ public class ShipItemCommand implements Command {
     }
 
     @Override
-    public void getPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String stringId = request.getParameter("id");
         int id = parseInt(stringId);
