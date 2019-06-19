@@ -7,13 +7,13 @@ Task
 пассажиров, учитывая класс билета (бассейн, спорт зал, кинозал,
 косметические салоны...).
 
-Installing instructions
+<b>Installing instruction</b><br>
 You need to download project by click Clone or download project.
 
 You can download zip or clone project , just write in git bush console git clone 
 https://github.com/bort1k/CruiseCompany.git
 
-Launching instruction
+<b>Launching instruction</b><br>
 To run this app you should have installed Java and Maven on your local machine.
 
 Launch cruise_company_en.sql from resources/database at your sql server
