@@ -34,7 +34,7 @@ public class SecurityFilter implements Filter {
                 filterChain.doFilter(request, response);
             }
             else{
-                request.getRequestDispatcher("/403").forward(request, response);
+                request.getRequestDispatcher("/jsp/403error.jsp").forward(request, response);
             }
         }
         else {

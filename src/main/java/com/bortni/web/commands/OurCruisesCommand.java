@@ -1,5 +1,6 @@
 package com.bortni.web.commands;
 
+import com.bortni.exceptions.ReadException;
 import com.bortni.service.CruiseService;
 import com.bortni.util.Routes;
 
@@ -18,7 +19,12 @@ public class OurCruisesCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List cruises = cruiseService.getCruisesWithShip();
+        List cruises = null;
+        try {
+            cruises = cruiseService.getCruisesWithShip();
+        } catch (ReadException e) {
+            request.getRequestDispatcher("/jsp/404error.jsp").forward(request, response);
+        }
         request.setAttribute("cruises", cruises);
         request.getRequestDispatcher(Routes.OUR_CRUISES.getRoute()).forward(request, response);
     }

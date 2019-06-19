@@ -60,7 +60,13 @@
                         <p class="card-text"><fmt:message key="cruise.item.start.date"/>: ${cruise.startDate}</p>
                         <nobr class="card-text"><fmt:message key="cruise.item.from.price"/> USD</nobr>
                         <p class="number">$${cruise.price}</p>
-                        <a href="#" class="btn btn-warning btn-block"><b><fmt:message key="home.container.button.make.offer"/> </b></a>
+                        <form action="${pageContext.request.contextPath}/eden-cruises/cruise-item"
+                              method="get" id="form1">
+                            <input type="hidden" name="cruise.id" value="${cruise.id}">
+                            <input type="hidden" name="ship_name" value="${cruise.ship.name}">
+                            <input type="submit" class="btn btn-warning btn-block make_offer" style="text-align:center;"
+                                   value="<fmt:message key="home.container.button.make.offer"/>">
+                        </form>
                     </div>
                 </div>
             </c:forEach>

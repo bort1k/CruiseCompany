@@ -17,22 +17,11 @@ public class ShipService {
         genericDao = daoFactory.getDao(Ship.class);
     }
 
-    public Ship getById(int id) {
-        try {
+    public Ship getById(int id) throws ReadException {
             return (Ship) genericDao.getByPK(id);
-        } catch (ReadException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
-    public List getAllShips() {
-        List ships = null;
-        try {
-            ships = genericDao.getAll();
-        } catch (ReadException e) {
-            e.printStackTrace();
-        }
-        return ships;
+    public List getAllShips() throws ReadException {
+        return genericDao.getAll();
     }
 }

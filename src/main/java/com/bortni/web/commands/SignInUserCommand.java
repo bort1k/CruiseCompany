@@ -1,6 +1,7 @@
 package com.bortni.web.commands;
 
 import com.bortni.dao.mysql.MySqlCruiseDao;
+import com.bortni.exceptions.ReadException;
 import com.bortni.exceptions.UserDoesNotExist;
 import com.bortni.model.User;
 import com.bortni.service.UserService;
@@ -41,13 +42,17 @@ public class SignInUserCommand implements Command {
                 return;
             }
         }
-
-        user = userService.getUserByEmailAndPassword(email, password);
-        request.getSession().setAttribute("userSession", user);
-        String pageUrl = (String) request.getSession().getAttribute("previousPageUrl");
-        if(pageUrl == null){
-            pageUrl = UrlPath.USER_PROFILE.getPath();
+        try {
+            user = userService.getUserByEmailAndPassword(email, password);
+            request.getSession().setAttribute("userSession", user);
+            String pageUrl = (String) request.getSession().getAttribute("previousPageUrl");
+            if (pageUrl == null) {
+                pageUrl = UrlPath.USER_PROFILE.getPath();
+            }
+            ForwardUserUtil.forwardSignedInUser(user, pageUrl, request, response);
+        }catch (ReadException e){
+            request.getRequestDispatcher("/jsp/404error.jsp").forward(request, response);
         }
-        ForwardUserUtil.forwardSignedInUser(user, pageUrl, request, response);
+
     }
 }

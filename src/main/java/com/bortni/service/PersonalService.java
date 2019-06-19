@@ -17,24 +17,12 @@ public class PersonalService {
         genericDao = daoFactory.getDao(Personal.class);
     }
 
-    public Personal getPersonalById(int id) {
-        try {
+    public Personal getPersonalById(int id) throws ReadException {
             return (Personal) genericDao.getByPK(id);
-        } catch (ReadException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
-    public Personal getPersonalByShipId(int id){
-        Personal personal;
-        try {
-            personal = ((MySqlPersonalDao) genericDao).getPersonalByShipId(id);
-            return personal;
-        } catch (ReadException e){
-            e.printStackTrace();
-        }
-        return null;
+    public Personal getPersonalByShipId(int id) throws ReadException {
+        return ((MySqlPersonalDao) genericDao).getPersonalByShipId(id);
     }
 
 

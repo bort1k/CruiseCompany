@@ -18,36 +18,29 @@ public class UserService {
     }
 
     public void createUser(User user) throws EmailAlreadyExistException {
-        try{
-            boolean isEmailExist = ((MySqlUserDao)genericDao).isEmailExist(user.getEmail());
-            if (isEmailExist){
+        try {
+            boolean isEmailExist = ((MySqlUserDao) genericDao).isEmailExist(user.getEmail());
+            if (isEmailExist) {
                 throw new EmailAlreadyExistException("Email is already exist");
             }
-            ((MySqlUserDao)genericDao).create(user);
-        }
-        catch (ReadException e){
+            ((MySqlUserDao) genericDao).create(user);
+        } catch (ReadException e) {
             e.printStackTrace();
         }
     }
 
-    public User getUserById(int id){
-        try {
-            return (User) genericDao.getByPK(id);
-        } catch (ReadException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public User getUserById(int id) throws ReadException {
+        return (User) genericDao.getByPK(id);
     }
 
     public boolean isUserExist(String email, String password) throws UserDoesNotExist {
         boolean exist = false;
         try {
-            exist = ((MySqlUserDao)genericDao).isExist(email, password);
-            if(!exist){
+            exist = ((MySqlUserDao) genericDao).isExist(email, password);
+            if (!exist) {
                 throw new UserDoesNotExist("User does not exist");
             }
-        }
-        catch (ReadException e){
+        } catch (ReadException e) {
             e.printStackTrace();
         }
         return exist;
@@ -55,9 +48,9 @@ public class UserService {
 
     public boolean isEmailExist(String email) throws EmailAlreadyExistException {
         boolean exist = true;
-        try{
-            exist = ((MySqlUserDao)genericDao).isEmailExist(email);
-            if(exist){
+        try {
+            exist = ((MySqlUserDao) genericDao).isEmailExist(email);
+            if (exist) {
                 throw new EmailAlreadyExistException("Email already exists");
             }
         } catch (ReadException e) {
@@ -67,15 +60,8 @@ public class UserService {
         return exist;
     }
 
-    public User getUserByEmailAndPassword(String email, String password){
-        User user;
-        try {
-            user = ((MySqlUserDao)genericDao).getUserByEmailAndPassword(email,password);
-            return user;
-        } catch (ReadException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public User getUserByEmailAndPassword(String email, String password) throws ReadException {
+        return ((MySqlUserDao) genericDao).getUserByEmailAndPassword(email, password);
     }
 
 }

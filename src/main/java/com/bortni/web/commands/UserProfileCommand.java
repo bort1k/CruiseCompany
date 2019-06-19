@@ -1,5 +1,6 @@
 package com.bortni.web.commands;
 
+import com.bortni.exceptions.ReadException;
 import com.bortni.model.User;
 import com.bortni.service.OrderService;
 import com.bortni.util.Routes;
@@ -24,7 +25,12 @@ public class UserProfileCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = (User)request.getSession().getAttribute("userSession");
-        List orders = orderService.getOrdersByUserId(user.getId());
+        List orders = null;
+        try {
+            orders = orderService.getOrdersByUserId(user.getId());
+        } catch (ReadException e) {
+            request.getRequestDispatcher("/jsp/404error.jsp").forward(request, response);
+        }
         LOGGER.info("Orders" + orders);
         request.setAttribute("orders", orders);
         request.getRequestDispatcher(Routes.USER_PROFILE.getRoute()).forward(request, response);
