@@ -1,5 +1,6 @@
 package com.bortni.web.commands;
 
+import com.bortni.exceptions.ReadException;
 import com.bortni.model.User;
 import com.bortni.service.OrderService;
 import com.bortni.util.Routes;
@@ -19,7 +20,12 @@ public class AdminCommand implements Command{
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List orders = orderService.getAllOrders();
+        List orders = null;
+        try {
+            orders = orderService.getAllOrders();
+        } catch (ReadException e) {
+            request.getRequestDispatcher("/jsp/404error.jsp").forward(request, response);
+        }
         request.setAttribute("orders", orders);
         request.getRequestDispatcher(Routes.ADMIN.getRoute()).forward(request, response);
     }

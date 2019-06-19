@@ -1,5 +1,6 @@
 package com.bortni.web.commands;
 
+import com.bortni.exceptions.ReadException;
 import com.bortni.model.Personal;
 import com.bortni.model.Ship;
 import com.bortni.service.CruiseService;
@@ -34,13 +35,18 @@ public class ShipItemCommand implements Command {
 
         String stringId = request.getParameter("id");
         int id = parseInt(stringId);
-        Ship ship = shipService.getById(id);
-        Personal personal = personalService.getPersonalByShipId(id);
-        ship.setPersonal(personal);
-        List cruises = cruiseService.getCruisesByShipId(id);
-        ship.setCruises(cruises);
-        LOGGER.info("Getting cruises by ship_id" + cruises.size());
-        request.setAttribute("ship_item", ship);
+        try {
+            Ship ship = shipService.getById(id);
+            Personal personal = personalService.getPersonalByShipId(id);
+            ship.setPersonal(personal);
+            List cruises = cruiseService.getCruisesByShipId(id);
+            ship.setCruises(cruises);
+            LOGGER.info("Getting cruises by ship_id" + cruises.size());
+            request.setAttribute("ship_item", ship);
+        }
+        catch (ReadException e){
+            request.getRequestDispatcher("/jsp/404error.jsp").forward(request, response);
+        }
         request.getRequestDispatcher(Routes.SHIP_ITEM.getRoute()).forward(request, response);
     }
 }

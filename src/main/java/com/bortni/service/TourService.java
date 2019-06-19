@@ -18,15 +18,8 @@ public class TourService {
         genericDao = daoFactory.getDao(Tour.class);
     }
 
-    public List getToursByCruiseId(int id){
-        List tours;
-        try{
-            tours = ((MySqlTourDao)genericDao).getToursByCruiseIdWithHarbor(id);
-            return tours;
-        }
-        catch (ReadException e){
-            e.printStackTrace();
-        }
-        return null;
+    public List getToursByCruiseId(int id) throws ReadException {
+
+        return ((MySqlTourDao) genericDao).getToursByCruiseIdWithHarbor(id);
     }
 }

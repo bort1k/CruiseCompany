@@ -1,5 +1,6 @@
 package com.bortni.web.commands;
 
+import com.bortni.exceptions.ReadException;
 import com.bortni.model.Cruise;
 import com.bortni.service.CruiseService;
 import com.bortni.service.PortService;
@@ -39,14 +40,18 @@ public class CruiseItemCommand implements Command {
             sCruiseId = (String) request.getSession().getAttribute("cruiseIdSession");
         }
         int id =  parseInt(sCruiseId);
+        try {
+            Cruise cruise = cruiseService.getCruiseById(id);
+            List ports = portService.getPortsByCruiseId(id);
+            List tours = tourService.getToursByCruiseId(id);
+            cruise.setPorts(ports);
+            request.setAttribute("cruise", cruise);
+            request.setAttribute("tours", tours);
+        }
+        catch (ReadException e){
+            request.getRequestDispatcher("/jsp/404error.jsp").forward(request, response);
+        }
 
-        Cruise cruise = cruiseService.getCruiseById(id);
-        List ports = portService.getPortsByCruiseId(id);
-        List tours = tourService.getToursByCruiseId(id);
-        cruise.setPorts(ports);
-
-        request.setAttribute("cruise", cruise);
-        request.setAttribute("tours", tours);
 
         request.getRequestDispatcher(Routes.CRUISE_ITEM.getRoute()).forward(request, response);
     }

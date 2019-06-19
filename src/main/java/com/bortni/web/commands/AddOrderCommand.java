@@ -1,5 +1,6 @@
 package com.bortni.web.commands;
 
+import com.bortni.exceptions.ReadException;
 import com.bortni.model.Cruise;
 import com.bortni.model.Order;
 import com.bortni.model.User;
@@ -41,7 +42,12 @@ public class AddOrderCommand implements Command{
 
         String sCruiseId = request.getParameter("cruise.id");
         int cruiseId = parseInt(sCruiseId);
-        Cruise cruise = cruiseService.getCruiseById(cruiseId);
+        Cruise cruise = null;
+        try {
+            cruise = cruiseService.getCruiseById(cruiseId);
+        } catch (ReadException e) {
+            request.getRequestDispatcher("/jsp/404error.jsp").forward(request, response);
+        }
         LOGGER.info("Cruise:" + cruise);
 
         request.getSession().removeAttribute(sCruiseId);
@@ -56,7 +62,11 @@ public class AddOrderCommand implements Command{
             order.setUser(user);
             order.setStatus(Status.WAITING);
             order = orderService.sumAllPrice(order, tours);
-            orderService.createOrder(order);
+            try {
+                orderService.createOrder(order);
+            } catch (ReadException e) {
+                request.getRequestDispatcher("/jsp/404error.jsp").forward(request, response);
+            }
 //            orders.add(order);
 //            request.getSession().removeAttribute("ordersSession");
 //            request.getSession().setAttribute("ordersSession", orders);

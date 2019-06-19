@@ -19,52 +19,29 @@ public class OrderService {
         genericDao = daoFactory.getDao(Order.class);
     }
 
-    public List getAllOrders(){
-        List orders;
-        try{
-            orders = genericDao.getAll();
-            return orders;
-        } catch (ReadException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public List getAllOrders() throws ReadException {
+        return genericDao.getAll();
     }
 
-    public List getOrdersByUserId(int id){
-        List orders;
-        try {
-            orders = ((MySqlOrderDao)genericDao).getOrdersByUserId(id);
-
-            return orders;
-        } catch (ReadException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public List getOrdersByUserId(int id) throws ReadException {
+        return ((MySqlOrderDao) genericDao).getOrdersByUserId(id);
     }
 
-    public Order sumAllPrice(Order order, List tours){
+    public Order sumAllPrice(Order order, List tours) {
         int price = order.getCruise().getPrice();
 
-        for(Object tour : tours){
-            price += ((Tour)tour).getPrice();
+        for (Object tour : tours) {
+            price += ((Tour) tour).getPrice();
         }
         order.setSumPrice(price);
         return order;
     }
 
-    public void createOrder(Order order){
-        try {
-            ((MySqlOrderDao)genericDao).create(order);
-        } catch (ReadException e) {
-            e.printStackTrace();
-        }
+    public void createOrder(Order order) throws ReadException {
+        ((MySqlOrderDao) genericDao).create(order);
     }
 
-    public void changeStatus(Order order){
-        try {
-            ((MySqlOrderDao)genericDao).updateStatus(order);
-        } catch (ReadException e) {
-            e.printStackTrace();
-        }
+    public void changeStatus(Order order) throws ReadException {
+        ((MySqlOrderDao) genericDao).updateStatus(order);
     }
 }

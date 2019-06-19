@@ -16,46 +16,19 @@ public class CruiseService {
         genericDao = daoFactory.getDao(Cruise.class);
     }
 
-    public Cruise getCruiseById(int id){
-        try {
+    public Cruise getCruiseById(int id) throws ReadException {
             return (Cruise) genericDao.getByPK(id);
-        } catch (ReadException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
-    public List getAllCruises(){
-        List cruises = null;
-        try {
-            cruises = genericDao.getAll();
-        } catch (ReadException e) {
-            e.printStackTrace();
-        }
-        return cruises;
+    public List getAllCruises() throws ReadException {
+        return genericDao.getAll();
     }
 
-    public List getCruisesByShipId(int id){
-        List cruises;
-        try {
-            cruises = ((MySqlCruiseDao) genericDao).getCruisesByShipId(id);
-            return cruises;
-        } catch (ReadException e){
-            e.printStackTrace();
-        }
-        return null;
+    public List getCruisesByShipId(int id) throws ReadException {
+        return ((MySqlCruiseDao) genericDao).getCruisesByShipId(id);
     }
 
-    public List getCruisesWithShip(){
-        List cruises;
-        try{
-            cruises = ((MySqlCruiseDao) genericDao).getCruisesWithShips();
-            return cruises;
-        }
-        catch (ReadException e){
-            e.printStackTrace();
-        }
-        return null;
+    public List getCruisesWithShip() throws ReadException {
+        return ((MySqlCruiseDao) genericDao).getCruisesWithShips();
     }
-
 }

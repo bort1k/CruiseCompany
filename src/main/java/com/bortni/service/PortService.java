@@ -17,24 +17,13 @@ public class PortService {
         genericDao = daoFactory.getDao(Port.class);
     }
 
-    public Port getPortById(int id){
-        try {
-            return (Port) genericDao.getByPK(id);
-        } catch (ReadException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public Port getPortById(int id) throws ReadException {
+
+        return (Port) genericDao.getByPK(id);
+
     }
 
-    public List getPortsByCruiseId(int id){
-        List ports;
-
-        try{
-            ports = ((MySqlPortDao) genericDao).getPortsByCruiseId(id);
-            return ports;
-        } catch (ReadException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public List getPortsByCruiseId(int id) throws ReadException {
+        return ((MySqlPortDao) genericDao).getPortsByCruiseId(id);
     }
 }

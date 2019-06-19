@@ -1,13 +1,13 @@
 CREATE DATABASE cruise_company_en;
 use cruise_company_en;
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Хост: localhost:3306
--- Время создания: Май 28 2019 г., 20:03
--- Версия сервера: 5.7.23
--- Версия PHP: 7.1.29
+-- Хост: 127.0.0.1
+-- Час створення: Чрв 19 2019 р., 10:12
+-- Версія сервера: 10.3.15-MariaDB
+-- Версія PHP: 7.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,13 +21,48 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `cruise_company_en`
+-- База даних: `cruise_company_en`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `cruise`
+-- Структура таблиці `bonus`
+--
+
+CREATE TABLE `bonus` (
+  `bonus_name` varchar(45) NOT NULL,
+  `id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Дамп даних таблиці `bonus`
+--
+
+INSERT INTO `bonus` (`bonus_name`, `id`) VALUES
+('swimming pool', 1),
+('cinema', 2),
+('gym', 3),
+('spa', 4),
+('bar', 5),
+('restaurant', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблиці `bonus_in_user`
+--
+
+CREATE TABLE `bonus_in_user` (
+  `id` int(11) NOT NULL,
+  `bonus_id` int(11) NOT NULL,
+  `user_order_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблиці `cruise`
 --
 
 CREATE TABLE `cruise` (
@@ -41,7 +76,7 @@ CREATE TABLE `cruise` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `cruise`
+-- Дамп даних таблиці `cruise`
 --
 
 INSERT INTO `cruise` (`id`, `duration`, `number_of_ports`, `price`, `start_date`, `ship_id`, `cruise_name`) VALUES
@@ -69,20 +104,20 @@ INSERT INTO `cruise` (`id`, `duration`, `number_of_ports`, `price`, `start_date`
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `cruise_in_harbour`
+-- Структура таблиці `cruise_in_harbor`
 --
 
-CREATE TABLE `cruise_in_harbour` (
+CREATE TABLE `cruise_in_harbor` (
   `id` int(11) NOT NULL,
   `cruise_id` int(11) NOT NULL,
   `harbor_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `cruise_in_harbour`
+-- Дамп даних таблиці `cruise_in_harbor`
 --
 
-INSERT INTO `cruise_in_harbour` (`id`, `cruise_id`, `harbor_id`) VALUES
+INSERT INTO `cruise_in_harbor` (`id`, `cruise_id`, `harbor_id`) VALUES
 (1, 1, 4),
 (2, 1, 1),
 (3, 1, 2),
@@ -204,7 +239,7 @@ INSERT INTO `cruise_in_harbour` (`id`, `cruise_id`, `harbor_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `harbor`
+-- Структура таблиці `harbor`
 --
 
 CREATE TABLE `harbor` (
@@ -213,7 +248,7 @@ CREATE TABLE `harbor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `harbor`
+-- Дамп даних таблиці `harbor`
 --
 
 INSERT INTO `harbor` (`id`, `harbor_name`) VALUES
@@ -299,7 +334,7 @@ INSERT INTO `harbor` (`id`, `harbor_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `personal`
+-- Структура таблиці `personal`
 --
 
 CREATE TABLE `personal` (
@@ -308,76 +343,60 @@ CREATE TABLE `personal` (
   `captain_lastname` varchar(200) NOT NULL,
   `technical_workers` int(11) NOT NULL,
   `hotel_workers` int(11) NOT NULL,
-  `shop_workers` int(11) NOT NULL
+  `shop_workers` int(11) NOT NULL,
+  `ship_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `personal`
+-- Дамп даних таблиці `personal`
 --
 
-INSERT INTO `personal` (`id`, `captain_firstname`, `captain_lastname`, `technical_workers`, `hotel_workers`, `shop_workers`) VALUES
-(1, 'Yara', 'Greyjoy', 50, 35, 15),
-(2, 'Antonio', 'French', 35, 15, 3),
-(3, 'Steve\r\n', 'Romb', 290, 200, 28),
-(4, 'Edward', 'Smith', 350, 180, 55),
-(5, 'Franchesko', 'Scettino', 680, 345, 69),
-(6, 'Joseph', 'Barnet', 5, 3, 1),
-(7, 'Arthur Henry', 'Rostron', 790, 402, 39),
-(8, 'Hans', 'Freiherr', 290, 175, 25),
-(9, 'Kate ', 'McKay', 805, 421, 59),
-(10, 'Robert', 'Scott', 180, 110, 15);
+INSERT INTO `personal` (`id`, `captain_firstname`, `captain_lastname`, `technical_workers`, `hotel_workers`, `shop_workers`, `ship_id`) VALUES
+(1, 'Yara', 'Greyjoy', 50, 35, 15, 1),
+(2, 'Antonio', 'French', 35, 15, 3, 2),
+(3, 'Steve\r\n', 'Romb', 290, 200, 28, 3),
+(4, 'Edward', 'Smith', 350, 180, 55, 4),
+(5, 'Franchesko', 'Scettino', 680, 345, 69, 5),
+(6, 'Joseph', 'Barnet', 5, 3, 1, 6),
+(7, 'Arthur Henry', 'Rostron', 790, 402, 39, 7),
+(8, 'Hans', 'Freiherr', 290, 175, 25, 8),
+(9, 'Kate ', 'McKay', 805, 421, 59, 9),
+(10, 'Robert', 'Scott', 180, 110, 15, 10);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `ship`
+-- Структура таблиці `ship`
 --
 
 CREATE TABLE `ship` (
   `id` int(11) NOT NULL,
   `passenger_capacity` int(4) NOT NULL,
   `ship_name` varchar(200) NOT NULL,
-  `personal_id` int(11) NOT NULL
+  `release_year` int(4) NOT NULL,
+  `image_url` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `ship`
+-- Дамп даних таблиці `ship`
 --
 
-INSERT INTO `ship` (`id`, `passenger_capacity`, `ship_name`, `personal_id`) VALUES
-(1, 300, 'Sea Angel', 1),
-(2, 52, ' American Spirit', 2),
-(3, 1188, 'Artania', 3),
-(4, 1874, 'Aurora', 4),
-(5, 2139, 'Brilliance of the seas', 5),
-(6, 18, 'Camila', 6),
-(7, 3700, 'Costa Diadema', 7),
-(8, 1400, 'Main schiff herz', 8),
-(9, 4200, 'Enchantiant Princess', 9),
-(10, 450, 'Aegean Odyssey', 10);
+INSERT INTO `ship` (`id`, `passenger_capacity`, `ship_name`, `release_year`, `image_url`) VALUES
+(1, 300, 'Sea Angel', 2016, 'sea-angel'),
+(2, 52, ' American Spirit', 2019, 'american-spirit'),
+(3, 1188, 'Artania', 2014, 'artania'),
+(4, 1874, 'Aurora', 2018, 'aurora'),
+(5, 2139, 'Brilliance of the seas', 2018, 'brilliance-of-the-seas'),
+(6, 18, 'Camila', 2017, 'camila'),
+(7, 3700, 'Costa Diadema', 2019, 'costa-diadema'),
+(8, 1400, 'Main schiff herz', 2015, 'main-schiff-herz'),
+(9, 4200, 'Enchantiant Princess', 2016, 'enchantiant-princess'),
+(10, 450, 'Aegean Odyssey', 2019, 'aegean-odyssey');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `ticket`
---
-
-CREATE TABLE `ticket` (
-  `id` int(11) NOT NULL,
-  `swimming_pool` tinyint(1) NOT NULL,
-  `gym` tinyint(1) NOT NULL,
-  `spa` tinyint(1) NOT NULL,
-  `cinema` tinyint(1) NOT NULL,
-  `ocean_view` tinyint(1) NOT NULL,
-  `restaurant_all_inclusive` tinyint(1) NOT NULL,
-  `class` enum('interior','outside_view','suites') NOT NULL,
-  `ship_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `tour`
+-- Структура таблиці `tour`
 --
 
 CREATE TABLE `tour` (
@@ -389,7 +408,7 @@ CREATE TABLE `tour` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Дамп данных таблицы `tour`
+-- Дамп даних таблиці `tour`
 --
 
 INSERT INTO `tour` (`id`, `tour_name`, `price`, `description`, `harbor_id`) VALUES
@@ -428,7 +447,7 @@ INSERT INTO `tour` (`id`, `tour_name`, `price`, `description`, `harbor_id`) VALU
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `user`
+-- Структура таблиці `user`
 --
 
 CREATE TABLE `user` (
@@ -436,136 +455,219 @@ CREATE TABLE `user` (
   `firstname` varchar(200) NOT NULL,
   `lastname` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
-  `role` enum('user','administrator','moderator') NOT NULL,
+  `role` enum('USER','ADMIN') NOT NULL,
   `password` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Индексы сохранённых таблиц
+-- Дамп даних таблиці `user`
+--
+
+INSERT INTO `user` (`id`, `firstname`, `lastname`, `email`, `role`, `password`) VALUES
+(1, 'Nikita', 'Bortnichuk', 'nikita.bortnichuk41@gmail.com', 'ADMIN', '1qaz'),
+(2, 'Anna', 'Tarasenko', 'anna.tarasenko@gmail.com', 'USER', '2wsx');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблиці `user_order`
+--
+
+CREATE TABLE `user_order` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `cruise_id` int(11) NOT NULL,
+  `status` enum('CONFIRMED','WAITING','DENIED','PAID') NOT NULL,
+  `sum_price` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Дамп даних таблиці `user_order`
+--
+
+INSERT INTO `user_order` (`id`, `user_id`, `cruise_id`, `status`, `sum_price`) VALUES
+(9, 2, 1, 'WAITING', 750),
+(10, 2, 1, 'WAITING', 840),
+(11, 1, 1, 'WAITING', 840),
+(12, 1, 2, 'WAITING', 600),
+(13, 2, 6, 'WAITING', 650),
+(14, 2, 7, 'WAITING', 1020),
+(15, 2, 20, 'WAITING', 11880);
+
+--
+-- Індекси збережених таблиць
 --
 
 --
--- Индексы таблицы `cruise`
+-- Індекси таблиці `bonus`
+--
+ALTER TABLE `bonus`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Індекси таблиці `bonus_in_user`
+--
+ALTER TABLE `bonus_in_user`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `bonus_id_idx` (`bonus_id`),
+  ADD KEY `user_order_id_idx` (`user_order_id`);
+
+--
+-- Індекси таблиці `cruise`
 --
 ALTER TABLE `cruise`
   ADD PRIMARY KEY (`id`),
   ADD KEY `ship_id_idx` (`ship_id`);
 
 --
--- Индексы таблицы `cruise_in_harbour`
+-- Індекси таблиці `cruise_in_harbor`
 --
-ALTER TABLE `cruise_in_harbour`
+ALTER TABLE `cruise_in_harbor`
   ADD PRIMARY KEY (`id`),
   ADD KEY `cruise_id` (`cruise_id`),
   ADD KEY `harbor_id` (`harbor_id`);
 
 --
--- Индексы таблицы `harbor`
+-- Індекси таблиці `harbor`
 --
 ALTER TABLE `harbor`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `personal`
+-- Індекси таблиці `personal`
 --
 ALTER TABLE `personal`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ship_id_idx` (`ship_id`);
 
 --
--- Индексы таблицы `ship`
+-- Індекси таблиці `ship`
 --
 ALTER TABLE `ship`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `personal_id` (`personal_id`);
-
---
--- Индексы таблицы `ticket`
---
-ALTER TABLE `ticket`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `tour`
+-- Індекси таблиці `tour`
 --
 ALTER TABLE `tour`
   ADD PRIMARY KEY (`id`),
   ADD KEY `harbor_id` (`harbor_id`);
 
 --
--- Индексы таблицы `user`
+-- Індекси таблиці `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- AUTO_INCREMENT для сохранённых таблиц
+-- Індекси таблиці `user_order`
+--
+ALTER TABLE `user_order`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cruise_id_IDX` (`cruise_id`),
+  ADD KEY `user_id_idx` (`user_id`);
+
+--
+-- AUTO_INCREMENT для збережених таблиць
 --
 
 --
--- AUTO_INCREMENT для таблицы `cruise`
+-- AUTO_INCREMENT для таблиці `bonus`
+--
+ALTER TABLE `bonus`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT для таблиці `bonus_in_user`
+--
+ALTER TABLE `bonus_in_user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблиці `cruise`
 --
 ALTER TABLE `cruise`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT для таблицы `harbor`
+-- AUTO_INCREMENT для таблиці `harbor`
 --
 ALTER TABLE `harbor`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
--- AUTO_INCREMENT для таблицы `personal`
+-- AUTO_INCREMENT для таблиці `personal`
 --
 ALTER TABLE `personal`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT для таблицы `ship`
+-- AUTO_INCREMENT для таблиці `ship`
 --
 ALTER TABLE `ship`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT для таблицы `tour`
+-- AUTO_INCREMENT для таблиці `tour`
 --
 ALTER TABLE `tour`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
--- AUTO_INCREMENT для таблицы `user`
+-- AUTO_INCREMENT для таблиці `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- Ограничения внешнего ключа сохраненных таблиц
+-- AUTO_INCREMENT для таблиці `user_order`
+--
+ALTER TABLE `user_order`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- Обмеження зовнішнього ключа збережених таблиць
 --
 
 --
--- Ограничения внешнего ключа таблицы `cruise`
+-- Обмеження зовнішнього ключа таблиці `bonus_in_user`
+--
+ALTER TABLE `bonus_in_user`
+  ADD CONSTRAINT `bonus_in_user_ibfk_1` FOREIGN KEY (`user_order_id`) REFERENCES `user_order` (`id`),
+  ADD CONSTRAINT `bonus_in_user_ibfk_2` FOREIGN KEY (`bonus_id`) REFERENCES `bonus` (`id`);
+
+--
+-- Обмеження зовнішнього ключа таблиці `cruise`
 --
 ALTER TABLE `cruise`
   ADD CONSTRAINT `ship_id` FOREIGN KEY (`ship_id`) REFERENCES `ship` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Ограничения внешнего ключа таблицы `cruise_in_harbour`
+-- Обмеження зовнішнього ключа таблиці `cruise_in_harbor`
 --
-ALTER TABLE `cruise_in_harbour`
-  ADD CONSTRAINT `cruise_in_harbour_ibfk_1` FOREIGN KEY (`cruise_id`) REFERENCES `cruise` (`id`),
-  ADD CONSTRAINT `cruise_in_harbour_ibfk_2` FOREIGN KEY (`harbor_id`) REFERENCES `harbor` (`id`);
+ALTER TABLE `cruise_in_harbor`
+  ADD CONSTRAINT `cruise_in_harbor_ibfk_1` FOREIGN KEY (`cruise_id`) REFERENCES `cruise` (`id`),
+  ADD CONSTRAINT `cruise_in_harbor_ibfk_2` FOREIGN KEY (`harbor_id`) REFERENCES `harbor` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `ship`
+-- Обмеження зовнішнього ключа таблиці `personal`
 --
-ALTER TABLE `ship`
-  ADD CONSTRAINT `ship_ibfk_2` FOREIGN KEY (`personal_id`) REFERENCES `personal` (`id`);
+ALTER TABLE `personal`
+  ADD CONSTRAINT `personal_ibfk_1` FOREIGN KEY (`ship_id`) REFERENCES `ship` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `tour`
+-- Обмеження зовнішнього ключа таблиці `tour`
 --
 ALTER TABLE `tour`
   ADD CONSTRAINT `tour_ibfk_1` FOREIGN KEY (`harbor_id`) REFERENCES `harbor` (`id`);
+
+--
+-- Обмеження зовнішнього ключа таблиці `user_order`
+--
+ALTER TABLE `user_order`
+  ADD CONSTRAINT `user_order_ibfk_1` FOREIGN KEY (`cruise_id`) REFERENCES `cruise` (`id`),
+  ADD CONSTRAINT `user_order_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
